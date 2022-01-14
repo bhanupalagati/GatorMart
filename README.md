@@ -1,30 +1,41 @@
 # GatorMart
 
-GatorMart is a digital marketplace where users can post things to buy, sell and trade items with other people in that particular area mainly fouses on the target based approach. This application mainly focuses on the following:
+GartorMart provides a way for the users to sell and buy used or new products.
 
-* Search bar used to search related items.
+The motivation behind the idea is there are many applications where we could buy and sell the products, but there is less focus on the target audience for buying and selling. For example, I could restrict my advertisement to appearing only for the students so that I could dodge many unwanted conversations initiated by users who are less like to complete the transaction. Similarly, a buyer wants to get a computer then buying it from a non-technical person is better because it is not heavily used.
 
-* Filter to list the items based on the filter applied such as loaction, category and target to which category the item needs to be sold.
+Although it seems like a trivial filter it allows users to buy or sell quickly by reaching more potential audiences and gives an additional dimension to make a prudent decision.
 
-* Create an ad for all the items and that can be modified or updated at any time.
-
-* Message to the seller at any time for any information.
-
-* Feature  based buying and selling option is available lable, which ensures more privacy, trust and unwanted reachability.
-
-
-## Tech Stack
-
-* Angular, MongoDB, Golang.
+* A user could buy or sell a product.
+* One can perform a search based on various factors such as Location, Category, Age, Condition, Price, PostedOn, and many more.
+* The ads could be sorted based on Price, PostedOn, SellerRating.
+* Google Maps integration for navigation.
+* Real-time encrypted messaging between buyer and seller.
 
 
-### Team Members 
+# Tech Stack
 
-1. Bhanu Prakash Reddy
+### FrontEnd
 
-2. Gowtham Reddy Eda
+* Angular
+* Jest
+* Jasmine
 
-3. Vamsi Krishna Reddy Kommareddy
+### BackEnd
 
-4. Nithin Ramesh
+* Go
 
+### DataBase
+
+* MongoDB
+
+
+# Team Members
+
+### FrontEnd
+* Bhanu Prakash Reddy
+* Nithin Ramesh
+
+### BackEnd
+* Gowtham Reddy Eda
+* Vamsi Krishna Reddy Kommareddy
