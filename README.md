@@ -33,9 +33,9 @@ Although it seems like a trivial filter it allows users to buy or sell quickly b
 # Team Members
 
 ### FrontEnd
-* Bhanu Prakash Reddy
-* Nithin Ramesh
+* Bhanu Prakash Reddy - 26233738
+* Nithin Ramesh - 17831756
 
 ### BackEnd
-* Gowtham Reddy Eda
-* Vamsi Krishna Reddy Kommareddy
+* Gowtham Reddy Eda - 31581463
+* Vamsi Krishna Reddy Kommareddy - 94438078
