@@ -1,0 +1,28 @@
+.product-card {
+    width: 250px;
+    margin: 20px;
+    &__image {
+        &__content {
+            object-position: center;
+            max-width:250px;
+            max-height:250px;
+            height: auto;
+            
+            width: auto;
+        }
+    }
+    &__info {
+        padding-bottom: 10px;
+        padding-right: 10px;
+        &__price {
+            font-weight: bolder;
+            display: inline;
+            font-size: 20px;
+        }
+        &__location {
+            color: grey;
+            display: inline;
+            font-size: 20px;
+        }
+    }
+}
