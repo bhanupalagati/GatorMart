@@ -1,0 +1,29 @@
+<mat-card class="product-card">
+  <mat-card-header>
+    <mat-card-title> {{ product.title }} </mat-card-title>
+    <mat-card-subtitle> {{product.secondary_title}} </mat-card-subtitle>
+  </mat-card-header>
+  <!-- <div class="product-card__image"> -->
+  <img class="product-card__image__content" mat-card-image [src]="product.imageUrl" alt="product.title">
+  <!-- </div> -->
+  <mat-card-content>
+    <div class="product-card__info">
+      <div class="product-card__info__price">
+        {{ product.price }}
+      </div>
+      <div class="product-card__info__price">
+        {{ product.condition }}
+      </div>
+    </div>
+    <p> {{ product.simple_desc }} </p>
+
+    <div class="product-card__info">
+      <div class="product-card__info__location">
+        {{ product.city }}
+      </div>
+      <div class="product-card__info__location">
+        {{ product.state }}
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
