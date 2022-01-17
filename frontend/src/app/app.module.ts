@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // Material Imports
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
+import { ProductListComponent } from './product-list/product-list.component';
 
 const materialImports = [
   MatCardModule,
@@ -16,7 +17,8 @@ const materialImports = [
 @NgModule({
   declarations: [
     AppComponent,
-    CardComponent
+    CardComponent,
+    ProductListComponent
   ],
   imports: [
     BrowserModule,
