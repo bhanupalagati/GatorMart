@@ -2,13 +2,21 @@ package main
 
 import (
 	"log"
-	"net/http"
+
+	"github.com/gofiber/fiber/v2"
 )
 
-func main() {
-	http.HandleFunc("/login", Login)
-	http.HandleFunc("/home", Home)
-	http.HandleFunc("/refresh", Refresh)
+func Login(c *fiber.Ctx) error {
 
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	return c.SendString("hi")
+}
+
+func main() {
+
+	app := fiber.New()
+
+	app.Get("/login", Login)
+
+	log.Fatal(app.Listen(":8000"))
+
 }
