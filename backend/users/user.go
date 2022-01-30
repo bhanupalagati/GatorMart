@@ -3,6 +3,7 @@ package users
 import (
 	"fmt"
 
+	"github.com/gofiber/fiber/v2"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -39,4 +40,13 @@ func InitialMigration() {
 		panic("Cannot connect to Database")
 	}
 	DB.AutoMigrate(&User{})
+}
+
+func SaveUser(c *fiber.Ctx) error {
+	user := new(User)
+	if err := c.BodyParser(user); err != nil {
+		return c.Status(500).SendString(err.Error())
+	}
+	DB.Create(&user)
+	return c.JSON(&user)
 }

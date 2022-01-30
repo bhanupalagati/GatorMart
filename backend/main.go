@@ -17,7 +17,7 @@ func main() {
 	app := fiber.New()
 
 	app.Get("/login", Login)
-
+	app.Post("/user", users.SaveUser)
 	log.Fatal(app.Listen(":8000"))
 
 }
