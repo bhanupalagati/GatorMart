@@ -2,7 +2,7 @@ package main
 
 import (
 	"log"
-	"main/users"
+	"main/products"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -13,12 +13,12 @@ func Login(c *fiber.Ctx) error {
 }
 
 func Routers(app *fiber.App) {
-	app.Get("/users", users.GetUsers)
-	app.Post("/user", users.SaveUser)
+	app.Get("/products", products.GetProducts)
+	app.Post("/product", products.SaveProduct)
 }
 
 func main() {
-	users.InitialMigration()
+	products.InitialMigration()
 	app := fiber.New()
 	Routers(app)
 	// app.Get("/login", Login)

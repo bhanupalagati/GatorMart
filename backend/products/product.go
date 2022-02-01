@@ -1,4 +1,4 @@
-package users
+package products
 
 import (
 	"fmt"
@@ -13,7 +13,7 @@ var err error
 
 const DNS = "root:Mysql@048@tcp(127.0.0.1:3306)/godb?charset=utf8mb4&parseTime=True&loc=Local"
 
-type User struct {
+type Product struct {
 	gorm.Model
 	Title             string `json:"title"`
 	SecondaryTitle    string `json:"secondarytitle"`
@@ -39,19 +39,19 @@ func InitialMigration() {
 		fmt.Println(err.Error())
 		panic("Cannot connect to Database")
 	}
-	DB.AutoMigrate(&User{})
+	DB.AutoMigrate(&Product{})
 }
 
-func SaveUser(c *fiber.Ctx) error {
-	user := new(User)
-	if err := c.BodyParser(user); err != nil {
+func SaveProduct(c *fiber.Ctx) error {
+	product := new(Product)
+	if err := c.BodyParser(product); err != nil {
 		return c.Status(500).SendString(err.Error())
 	}
-	DB.Create(&user)
-	return c.JSON(&user)
+	DB.Create(&product)
+	return c.JSON(&product)
 }
-func GetUsers(c *fiber.Ctx) error {
-	var users []User
-	DB.Find(&users)
-	return c.JSON(&users)
+func GetProducts(c *fiber.Ctx) error {
+	var products []Product
+	DB.Find(&products)
+	return c.JSON(&products)
 }
