@@ -50,3 +50,8 @@ func SaveUser(c *fiber.Ctx) error {
 	DB.Create(&user)
 	return c.JSON(&user)
 }
+func GetUsers(c *fiber.Ctx) error {
+	var users []User
+	DB.Find(&users)
+	return c.JSON(&users)
+}
