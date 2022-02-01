@@ -1,0 +1,39 @@
+<div class="details_container">
+    <div class="details_container__image">
+        <!-- Carousel goes here -->
+    </div>
+    <div class="details_container__main_info">
+        <div class="details_container__main_info__data">
+            <div class="details_container__main_info__data__title">
+                {{ product.title }}
+            </div>
+            <div class="details_container__main_info__data__secondary_title">
+                {{ product.secondary_title }}
+            </div>
+            <div class="details_container__main_info__data__price">
+                {{ product.price }}
+            </div>
+            <div class="details_container__main_info__data__city_state">
+                {{ product.city + ", " + product.state }}
+            </div>
+        </div>
+        <div class="details_container__main_info__msg">
+            <!-- Chat Icon -->
+        </div>
+    </div>
+    <div class="details_container__age">
+        {{ product.age }}
+    </div>
+    <div class="details_container__condition">
+        {{ product.condition }}
+    </div>
+    <div class="details_container__description">
+        {{ product.description }}
+    </div>
+    <div class="details_container__posted_on">
+        {{ product.posted_date | date }}
+    </div>
+    <div class="details_container__map">
+        <!-- Map -->
+    </div>
+</div>

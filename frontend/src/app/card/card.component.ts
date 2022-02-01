@@ -14,4 +14,8 @@ export class CardComponent implements OnInit {
     // Get product as in put
   }
 
+  detailedView(event) {
+    // Route to the details page
+  }
+
 }
