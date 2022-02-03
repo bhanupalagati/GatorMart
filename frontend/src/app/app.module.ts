@@ -10,6 +10,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 const materialImports = [
   MatCardModule,
@@ -25,6 +26,7 @@ const materialImports = [
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     ...materialImports
   ],
