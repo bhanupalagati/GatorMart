@@ -10,10 +10,17 @@ import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import {MatIconModule} from '@angular/material/icon';
+
+// Other Imports
+import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
 
 const materialImports = [
   MatCardModule,
-  MatButtonModule
+  MatButtonModule,
+  MatIconModule
 ]
 @NgModule({
   declarations: [
@@ -26,7 +33,11 @@ const materialImports = [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ...materialImports
+    ...materialImports,
+    NgbModule,
+    NgbPaginationModule,
+    NgbAlertModule,
+    FormsModule
   ],
   exports: [
     ...materialImports

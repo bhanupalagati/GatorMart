@@ -13,7 +13,8 @@ export type Product = {
     posted_date: string,
     condition: "New" | "Like New" | "Used" | "Heavily Used" | "NA",
     age: number,
-    status: "Deleted" | "Sold" | "Active"
+    status: "Deleted" | "Sold" | "Active",
+    images: string[]
 }
 
 export type ProductResponse = {
