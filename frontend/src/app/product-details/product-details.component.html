@@ -1,7 +1,16 @@
+<div class="product__image">
+    <ngb-carousel [showNavigationArrows]="true" [showNavigationIndicators]="true" interval="20000" [keyboard]="true"
+        [pauseOnHover]="true" [wrap]="true">
+        <ng-template ngbSlide *ngFor="let image of product.images">
+            <img [src]="image" alt="Carousel One">
+            <div class="carousel-caption">
+                <h3>{{ product.title }}</h3>
+                <p>{{ product.secondary_title }}</p>
+            </div>
+        </ng-template>
+    </ngb-carousel>
+</div>
 <div class="details_container">
-    <div class="details_container__image">
-        <!-- Carousel goes here -->
-    </div>
     <div class="details_container__main_info">
         <div class="details_container__main_info__data">
             <div class="details_container__main_info__data__title">
@@ -18,11 +27,19 @@
             </div>
         </div>
         <div class="details_container__main_info__msg">
-            <!-- Chat Icon -->
+            <mat-icon aria-hidden="false" aria-label="Example home icon" color="primary"> chat </mat-icon>
+        </div>
+    </div>
+    <div class="details_container__actions">
+        <div class="details_container__actions__edit">
+            <button mat-raised-button color="primary">Edit</button>
+        </div>
+        <div>
+            <button mat-raised-button color="warn">Remove Add</button>
         </div>
     </div>
     <div class="details_container__age">
-        {{ product.age }}
+        Product Age:- {{ product.age }}
     </div>
     <div class="details_container__condition">
         {{ product.condition }}
