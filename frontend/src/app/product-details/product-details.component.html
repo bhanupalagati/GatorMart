@@ -1,7 +1,7 @@
 <div class="product__image">
     <ngb-carousel [showNavigationArrows]="true" [showNavigationIndicators]="true" interval="20000" [keyboard]="true"
         [pauseOnHover]="true" [wrap]="true">
-        <ng-template ngbSlide *ngFor="let image of product.images">
+        <ng-template ngbSlide *ngFor="let image of images">
             <img [src]="image" alt="Carousel One">
             <div class="carousel-caption">
                 <h3>{{ product.title }}</h3>

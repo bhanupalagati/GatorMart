@@ -9,13 +9,15 @@ import { product } from '../mocks/products.mock';
 })
 export class ProductDetailsComponent implements OnInit {
   product: Product
+  images: string[]
   constructor() { }
 
   ngOnInit(): void {
-    this.product = product
+    this.product = product;
+    this.images = product.images.split(",");
   }
 
   // Construct an API call to get product details
-
+  
 
 }

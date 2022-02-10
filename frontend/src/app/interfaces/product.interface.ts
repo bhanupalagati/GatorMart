@@ -7,19 +7,21 @@ export type Product = {
     description: string,
     city: string,
     state: string,
-    location_lat: number,
-    location_long: number,
+    location_lat: string,
+    location_long: string,
     posted_by: string,
     posted_date: string,
     condition: "New" | "Like New" | "Used" | "Heavily Used" | "NA",
     age: number,
     status: "Deleted" | "Sold" | "Active",
-    images: string[]
+    images: string,
+    target: string,
+    category: string
 }
 
 export type ProductResponse = {
-    count: number,
-    next_page: number,
-    previous_page: number,
+    count?: number,
+    next_page?: number,
+    previous_page?: number,
     products: Product[]
 }
