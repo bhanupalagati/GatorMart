@@ -67,7 +67,25 @@ func GetProduct(c *fiber.Ctx) error {
 	var product Product
 	DB.Find(&product, id)
 	if product.ID == 0 {
-		return errors.New("User doesnt exist")
+		return errors.New("user doesnt exist")
 	}
 	return c.JSON(&product)
+}
+
+func UpdateProduct(c *fiber.Ctx) error {
+	id, err := c.ParamsInt("id")
+	if err != nil {
+		return c.Status(400).JSON("Please make sure that :id is an integer")
+	}
+	product := new(Product)
+	DB.Find(&product, id)
+	if product.ID == 0 {
+		return errors.New("user doesnt exist")
+	}
+	if err := c.BodyParser(product); err != nil {
+		return c.Status(400).SendString(err.Error())
+	}
+	DB.Save(&product)
+	return c.JSON(&product)
+
 }
