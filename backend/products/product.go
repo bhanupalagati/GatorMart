@@ -78,7 +78,7 @@ func UpdateProduct(c *fiber.Ctx) error {
 		return c.Status(400).JSON("Please make sure that :id is an integer")
 	}
 	product := new(Product)
-	DB.Find(&product, id)
+	DB.First(&product, id)
 	if product.ID == 0 {
 		return errors.New("user doesnt exist")
 	}
