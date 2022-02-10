@@ -16,7 +16,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {HttpClientModule } from '@angular/common/http';
 
 const materialImports = [
   MatCardModule,
@@ -37,7 +37,7 @@ const materialImports = [
     BrowserAnimationsModule,
     ...materialImports,
     NgbModule,
-    NgbPaginationModule,s
+    NgbPaginationModule,
     NgbAlertModule,
     FormsModule
   ],
