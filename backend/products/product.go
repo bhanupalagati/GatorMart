@@ -1,6 +1,7 @@
 package products
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/gofiber/fiber/v2"
@@ -47,7 +48,7 @@ func InitialMigration() {
 func SaveProduct(c *fiber.Ctx) error {
 	product := new(Product)
 	if err := c.BodyParser(product); err != nil {
-		return c.Status(500).SendString(err.Error())
+		return c.Status(400).SendString(err.Error())
 	}
 	DB.Create(&product)
 	return c.JSON(&product)
@@ -56,4 +57,17 @@ func GetProducts(c *fiber.Ctx) error {
 	var products []Product
 	DB.Find(&products)
 	return c.JSON(&products)
+}
+
+func GetProduct(c *fiber.Ctx) error {
+	id, err := c.ParamsInt("id")
+	if err != nil {
+		return c.Status(400).JSON("Please make sure that :id is an integer")
+	}
+	var product Product
+	DB.Find(&product, id)
+	if product.ID == 0 {
+		return errors.New("User doesnt exist")
+	}
+	return c.JSON(&product)
 }
