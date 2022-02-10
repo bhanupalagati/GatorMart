@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Product } from '../interfaces/product.interface';
 import { product } from '../mocks/products.mock';
+import { ProductsService } from '../services/products.service';
 
 @Component({
   selector: 'app-product-details',
@@ -10,13 +12,20 @@ import { product } from '../mocks/products.mock';
 export class ProductDetailsComponent implements OnInit {
   product: Product
   images: string[]
-  constructor() { }
+  id: string
+  constructor(private activatedRoute: ActivatedRoute, private productService: ProductsService) { }
 
   ngOnInit(): void {
-    this.product = product;
-    this.images = product.images.split(",");
+    this.id = this.activatedRoute.snapshot.paramMap.get("id");
+    this.fetchProduct();
   }
 
+  fetchProduct() {
+    this.productService.getProductDetails(this.id).subscribe(res => {
+      this.product = res;
+      this.images = product.images.split(",");
+    });
+  }
   // Construct an API call to get product details
   
 

@@ -10,6 +10,10 @@ export class ProductsService {
   constructor(private http: HttpClient) { }
 
   getProductList() {
-    return this.http.get<Product>(this.baseUrl + "products");
+    return this.http.get<Product[]>(this.baseUrl + "products");
+  }
+
+  getProductDetails(id) {
+    return this.http.get<Product>(this.baseUrl + "product/"+id);
   }
 }
