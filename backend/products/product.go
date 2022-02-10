@@ -11,14 +11,14 @@ import (
 var DB *gorm.DB
 var err error
 
-const DNS = "root:Mysql@048@tcp(127.0.0.1:3306)/godbgator?charset=utf8mb4&parseTime=True&loc=Local"
+const DNS = "root:Mysql@048@tcp(127.0.0.1:3306)/godbgator1?charset=utf8mb4&parseTime=True&loc=Local"
 
 type Product struct {
 	gorm.Model
 	Title             string `json:"title"`
 	SecondaryTitle    string `json:"secondary_title"`
 	ImageUrl          string `json:"imageUrl"`
-	Price             string `json:"price"`
+	Price             int    `json:"price"`
 	SimpleDescription string `json:"simple_desc"`
 	Description       string `json:"description"`
 	City              string `json:"city"`
@@ -30,7 +30,7 @@ type Product struct {
 	PostedBy          string `json:"posted_by"`
 	PostedDate        string `json:"posted_date"`
 	Condition         string `json:"condition"`
-	Age               string `json:"age"`
+	Age               int    `json:"age"`
 	AdStatus          string `json:"status"`
 	Images            string `json:"images"`
 }
