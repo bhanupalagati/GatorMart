@@ -16,6 +16,7 @@ func Login(c *fiber.Ctx) error {
 func Routers(app *fiber.App) {
 	app.Get("/products", products.GetProducts)
 	app.Post("/product", products.SaveProduct)
+	app.Get("/product/:id", products.GetProduct)
 }
 
 func main() {
