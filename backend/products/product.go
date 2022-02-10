@@ -11,26 +11,28 @@ import (
 var DB *gorm.DB
 var err error
 
-const DNS = "root:Mysql@048@tcp(127.0.0.1:3306)/godb?charset=utf8mb4&parseTime=True&loc=Local"
+const DNS = "root:Mysql@048@tcp(127.0.0.1:3306)/godbgator?charset=utf8mb4&parseTime=True&loc=Local"
 
 type Product struct {
 	gorm.Model
 	Title             string `json:"title"`
-	SecondaryTitle    string `json:"secondarytitle"`
-	Image             string `json:"image"`
+	SecondaryTitle    string `json:"secondary_title"`
+	ImageUrl          string `json:"imageUrl"`
 	Price             string `json:"price"`
-	SimpleDescription string `json:"simpleDescription"`
+	SimpleDescription string `json:"simple_desc"`
 	Description       string `json:"description"`
 	City              string `json:"city"`
 	State             string `json:"state"`
-	Location          string `json:"location"`
+	Location_Lat      string `json:"location_lat"`
+	Location_Long     string `json:"location_long"`
 	Target            string `json:"target"`
 	Category          string `json:"category"`
-	PostedBy          string `json:"postedBy"`
-	PostedDate        string `json:"postedDate"`
+	PostedBy          string `json:"posted_by"`
+	PostedDate        string `json:"posted_date"`
 	Condition         string `json:"condition"`
 	Age               string `json:"age"`
-	AdStatus          string `json:"adStatus"`
+	AdStatus          string `json:"status"`
+	Images            string `json:"images"`
 }
 
 func InitialMigration() {
