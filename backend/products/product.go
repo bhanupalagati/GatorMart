@@ -67,7 +67,7 @@ func GetProduct(c *fiber.Ctx) error {
 	var product Product
 	DB.Find(&product, id)
 	if product.ID == 0 {
-		return errors.New("user doesnt exist")
+		return errors.New("product id doesnt exist")
 	}
 	return c.JSON(&product)
 }
@@ -80,7 +80,7 @@ func UpdateProduct(c *fiber.Ctx) error {
 	product := new(Product)
 	DB.First(&product, id)
 	if product.ID == 0 {
-		return errors.New("user doesnt exist")
+		return errors.New("product id doesnt exist")
 	}
 	if err := c.BodyParser(product); err != nil {
 		return c.Status(400).SendString(err.Error())
@@ -88,4 +88,18 @@ func UpdateProduct(c *fiber.Ctx) error {
 	DB.Save(&product)
 	return c.JSON(&product)
 
+}
+
+func DeleteProduct(c *fiber.Ctx) error {
+	id, err := c.ParamsInt("id")
+	if err != nil {
+		return c.Status(400).JSON("Please make sure that :id is an integer")
+	}
+	var product Product
+	DB.First(&product, id)
+	if product.ID == 0 {
+		return errors.New("product id doesnt exist")
+	}
+	DB.Delete(&product)
+	return c.SendString("Product ad is deleted")
 }
