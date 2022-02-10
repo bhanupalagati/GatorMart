@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {Product} from '../interfaces/product.interface';
 
 @Component({
@@ -8,13 +9,14 @@ import {Product} from '../interfaces/product.interface';
 })
 export class CardComponent implements OnInit {
   @Input() product: Product;
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     // Get product as in put
   }
 
-  detailedView(event) {
+  detailedView(id) {
+    this.router.navigateByUrl('/product/'+id)
     // Route to the details page
   }
 

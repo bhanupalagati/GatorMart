@@ -1,6 +1,7 @@
 import { Product, ProductResponse } from '../interfaces/product.interface';
 
 export let product: Product = {
+    ID: 1,
     title: 'Iphone 12 Pro Max',
     secondary_title: 'Black 4GB 256GB',
     imageUrl: "https://www.gizmochina.com/wp-content/uploads/2021/09/iPhone-13-all-colors-featured-b-1024x606.jpeg",
