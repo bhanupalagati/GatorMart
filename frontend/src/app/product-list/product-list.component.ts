@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Product, ProductResponse } from '../interfaces/product.interface';
-import { productResp } from '../mocks/products.mock';
-import { HttpClient } from '@angular/common/http';
+import { Product } from '../interfaces/product.interface';
 import { ProductsService } from '../services/products.service';
 
 @Component({
@@ -12,13 +10,13 @@ import { ProductsService } from '../services/products.service';
 
 export class ProductListComponent implements OnInit {
   productResp: Product[];
+  loading = true;
   constructor(private productsService: ProductsService) { }
 
   ngOnInit(): void {
     this.productsService.getProductList().subscribe(res => {
       this.productResp = res;
-      console.log(this.productResp);
-      
+      this.loading = false;
     });
   }
 }

@@ -1,3 +1,4 @@
-<div class="list-container">
+<div class="list-container" *ngIf="!loading">
     <app-card *ngFor="let product of productResp" [product]="product"></app-card>
 </div>
+<app-loader *ngIf="loading"></app-loader>

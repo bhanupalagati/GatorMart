@@ -1,56 +1,59 @@
-<div class="product__image">
-    <ngb-carousel [showNavigationArrows]="true" [showNavigationIndicators]="true" interval="20000" [keyboard]="true"
-        [pauseOnHover]="true" [wrap]="true">
-        <ng-template ngbSlide *ngFor="let image of images">
-            <img [src]="image" alt="Carousel One">
-            <div class="carousel-caption">
-                <h3>{{ product.title }}</h3>
-                <p>{{ product.secondary_title }}</p>
+<div *ngIf="!loading">
+    <div class="product__image">
+        <ngb-carousel [showNavigationArrows]="true" [showNavigationIndicators]="true" interval="20000" [keyboard]="true"
+            [pauseOnHover]="true" [wrap]="true">
+            <ng-template ngbSlide *ngFor="let image of images">
+                <img [src]="image" alt="Carousel One">
+                <div class="carousel-caption">
+                    <h3>{{ product.title }}</h3>
+                    <p>{{ product.secondary_title }}</p>
+                </div>
+            </ng-template>
+        </ngb-carousel>
+    </div>
+    <div class="details_container">
+        <div class="details_container__main_info">
+            <div class="details_container__main_info__data">
+                <div class="details_container__main_info__data__title">
+                    {{ product.title }}
+                </div>
+                <div class="details_container__main_info__data__secondary_title">
+                    {{ product.secondary_title }}
+                </div>
+                <div class="details_container__main_info__data__price">
+                    {{ product.price }}
+                </div>
+                <div class="details_container__main_info__data__city_state">
+                    {{ product.city + ", " + product.state }}
+                </div>
             </div>
-        </ng-template>
-    </ngb-carousel>
+            <div class="details_container__main_info__msg">
+                <mat-icon aria-hidden="false" aria-label="Example home icon" color="primary"> chat </mat-icon>
+            </div>
+        </div>
+        <div class="details_container__actions">
+            <div class="details_container__actions__edit">
+                <button mat-raised-button color="primary">Edit</button>
+            </div>
+            <div>
+                <button mat-raised-button color="warn">Remove Add</button>
+            </div>
+        </div>
+        <div class="details_container__age">
+            Product Age:- {{ product.age }}
+        </div>
+        <div class="details_container__condition">
+            {{ product.condition }}
+        </div>
+        <div class="details_container__description">
+            {{ product.description }}
+        </div>
+        <div class="details_container__posted_on">
+            {{ product.posted_date | date }}
+        </div>
+        <div class="details_container__map">
+            <!-- Map -->
+        </div>
+    </div>
 </div>
-<div class="details_container">
-    <div class="details_container__main_info">
-        <div class="details_container__main_info__data">
-            <div class="details_container__main_info__data__title">
-                {{ product.title }}
-            </div>
-            <div class="details_container__main_info__data__secondary_title">
-                {{ product.secondary_title }}
-            </div>
-            <div class="details_container__main_info__data__price">
-                {{ product.price }}
-            </div>
-            <div class="details_container__main_info__data__city_state">
-                {{ product.city + ", " + product.state }}
-            </div>
-        </div>
-        <div class="details_container__main_info__msg">
-            <mat-icon aria-hidden="false" aria-label="Example home icon" color="primary"> chat </mat-icon>
-        </div>
-    </div>
-    <div class="details_container__actions">
-        <div class="details_container__actions__edit">
-            <button mat-raised-button color="primary">Edit</button>
-        </div>
-        <div>
-            <button mat-raised-button color="warn">Remove Add</button>
-        </div>
-    </div>
-    <div class="details_container__age">
-        Product Age:- {{ product.age }}
-    </div>
-    <div class="details_container__condition">
-        {{ product.condition }}
-    </div>
-    <div class="details_container__description">
-        {{ product.description }}
-    </div>
-    <div class="details_container__posted_on">
-        {{ product.posted_date | date }}
-    </div>
-    <div class="details_container__map">
-        <!-- Map -->
-    </div>
-</div>
+<app-loader *ngIf="loading"></app-loader>

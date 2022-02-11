@@ -10,9 +10,10 @@ import { ProductsService } from '../services/products.service';
   styleUrls: ['./product-details.component.scss']
 })
 export class ProductDetailsComponent implements OnInit {
-  product: Product
-  images: string[]
-  id: string
+  product: Product;
+  images: string[];
+  id: string;
+  loading = true;
   constructor(private activatedRoute: ActivatedRoute, private productService: ProductsService) { }
 
   ngOnInit(): void {
@@ -24,6 +25,7 @@ export class ProductDetailsComponent implements OnInit {
     this.productService.getProductDetails(this.id).subscribe(res => {
       this.product = res;
       this.images = product.images.split(",");
+      this.loading = false;
     });
   }
   // Construct an API call to get product details
