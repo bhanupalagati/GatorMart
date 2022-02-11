@@ -17,6 +17,7 @@ import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import {HttpClientModule } from '@angular/common/http';
+import { LoaderComponent } from './loader/loader.component';
 
 const materialImports = [
   MatCardModule,
@@ -28,7 +29,8 @@ const materialImports = [
     AppComponent,
     CardComponent,
     ProductListComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
