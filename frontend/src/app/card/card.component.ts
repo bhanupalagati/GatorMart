@@ -16,7 +16,7 @@ export class CardComponent implements OnInit {
   }
 
   detailedView(id) {
-    this.router.navigateByUrl('/product/'+id)
+    this.router.navigateByUrl('/product/'+id);
     // Route to the details page
   }
 

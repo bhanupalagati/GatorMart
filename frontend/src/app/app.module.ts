@@ -11,18 +11,23 @@ import {MatButtonModule} from '@angular/material/button';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import {MatIconModule} from '@angular/material/icon';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 // Other Imports
 import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule } from '@angular/common/http';
 import { LoaderComponent } from './loader/loader.component';
+import { AdFormComponent } from './ad-form/ad-form.component';
 
 const materialImports = [
   MatCardModule,
   MatButtonModule,
-  MatIconModule
+  MatIconModule,
+  MatFormFieldModule,
+  MatInputModule
 ]
 @NgModule({
   declarations: [
@@ -30,7 +35,8 @@ const materialImports = [
     CardComponent,
     ProductListComponent,
     ProductDetailsComponent,
-    LoaderComponent
+    LoaderComponent,
+    AdFormComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +47,8 @@ const materialImports = [
     NgbModule,
     NgbPaginationModule,
     NgbAlertModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     ...materialImports

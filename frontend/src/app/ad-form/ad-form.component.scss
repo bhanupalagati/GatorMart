@@ -1,0 +1,12 @@
+.ad_form_container {
+    padding: 30px;
+    &__flex {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        &__input {
+            padding-top: 25px;
+        }
+    }
+
+}
