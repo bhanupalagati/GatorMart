@@ -1,0 +1,81 @@
+<div class="ad_form_container">
+    <div [formGroup]="createForm" class="ad_form_container__flex">
+        <h1>Welcome to the Ad creation page</h1>
+        <mat-form-field appearance="outline" class="ad_form_container__flex__input">
+            <mat-label>Title</mat-label>
+            <input matInput placeholder="Iphone 13 Pro Max" formControlName="title">
+            <mat-hint>Enter your product title here</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="ad_form_container__flex__input">
+            <mat-label>Secondary Title</mat-label>
+            <input matInput placeholder="6GB RAM and 128GB ROM" formControlName="secondary_title">
+            <mat-hint>Give important product specs</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="ad_form_container__flex__input">
+            <mat-label>ImageUrl</mat-label>
+            <input matInput placeholder="https://somethinghere" formControlName="imageUrl">
+            <mat-hint>Provide your image Url</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="ad_form_container__flex__input">
+            <mat-label>Price</mat-label>
+            <input matInput placeholder="1100.99" formControlName="price">
+            <mat-hint>Provide the product listing price</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="ad_form_container__flex__input">
+            <mat-label>Simple Description</mat-label>
+            <input matInput placeholder="Very rarely used." formControlName="simple_desc">
+            <mat-hint>Short but highly informative description</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="ad_form_container__flex__input">
+            <mat-label>Description</mat-label>
+            <input matInput placeholder="You probably want to write at least 50 words to describe your product." formControlName="description">
+            <mat-hint>Please provide some detailed information</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="ad_form_container__flex__input">
+            <mat-label>City</mat-label>
+            <input matInput placeholder="Gainesville" formControlName="city">
+            <mat-hint>Enter the city or village you are in</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="ad_form_container__flex__input">
+            <mat-label>State</mat-label>
+            <input matInput placeholder="FL" formControlName="state">
+            <mat-hint>Use only short hand notations Florida => FL</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="ad_form_container__flex__input">
+            <mat-label>Latitude</mat-label>
+            <input matInput placeholder="12.1001" formControlName="location_lat">
+            <mat-hint>Locate me will come to your rescue</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="ad_form_container__flex__input">
+            <mat-label>Longitude</mat-label>
+            <input matInput placeholder="17.119" formControlName="location_long">
+            <mat-hint>Locate me will come to your rescue</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="ad_form_container__flex__input">
+            <mat-label>Condition</mat-label>
+            <input matInput placeholder="New" formControlName="condition">
+            <mat-hint>Please provide </mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="ad_form_container__flex__input">
+            <mat-label>Age</mat-label>
+            <input matInput placeholder="1.2" formControlName="age">
+            <mat-hint>How many years old is your product</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="ad_form_container__flex__input">
+            <mat-label>Images</mat-label>
+            <input matInput placeholder="https://somethinghere1, https://somethinghere2, https://somethinghere3" formControlName="images">
+            <mat-hint>A comma separated urls </mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="ad_form_container__flex__input">
+            <mat-label>Target</mat-label>
+            <input matInput placeholder="Student" formControlName="target">
+            <mat-hint>Whom do you want to target</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="ad_form_container__flex__input">
+            <mat-label>Category</mat-label>
+            <input matInput placeholder="Electronics" formControlName="category">
+            <mat-hint>Your products category</mat-hint>
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="createAd()" [disabled]="createForm.invalid">Create Ad</button>
+    </div>
+</div>
