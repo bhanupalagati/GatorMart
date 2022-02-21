@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { DeletePopUpComponent } from '../delete-pop-up/delete-pop-up.component';
 import { Product } from '../interfaces/product.interface';
 import { product } from '../mocks/products.mock';
 import { ProductsService } from '../services/products.service';
@@ -14,7 +16,7 @@ export class ProductDetailsComponent implements OnInit {
   images: string[];
   id: string;
   loading = true;
-  constructor(private activatedRoute: ActivatedRoute, private productService: ProductsService) { }
+  constructor(private activatedRoute: ActivatedRoute, private productService: ProductsService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.id = this.activatedRoute.snapshot.paramMap.get("id");
@@ -28,7 +30,8 @@ export class ProductDetailsComponent implements OnInit {
       this.loading = false;
     });
   }
-  // Construct an API call to get product details
   
-
+  openDelete() {
+    this.dialog.open(DeletePopUpComponent, {data: this.product});
+  }
 }

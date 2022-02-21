@@ -13,6 +13,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import {MatDialogModule} from '@angular/material/dialog';
 
 // Other Imports
 import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
@@ -21,13 +22,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule } from '@angular/common/http';
 import { LoaderComponent } from './loader/loader.component';
 import { AdFormComponent } from './ad-form/ad-form.component';
+import { DeletePopUpComponent } from './delete-pop-up/delete-pop-up.component';
 
 const materialImports = [
   MatCardModule,
   MatButtonModule,
   MatIconModule,
   MatFormFieldModule,
-  MatInputModule
+  MatInputModule,
+  MatDialogModule
 ]
 @NgModule({
   declarations: [
@@ -36,7 +39,8 @@ const materialImports = [
     ProductListComponent,
     ProductDetailsComponent,
     LoaderComponent,
-    AdFormComponent
+    AdFormComponent,
+    DeletePopUpComponent
   ],
   imports: [
     BrowserModule,
