@@ -16,4 +16,9 @@ export class ProductsService {
   getProductDetails(id) {
     return this.http.get<Product>(this.baseUrl + "product/"+id);
   }
+
+  createNewProduct(data) {
+    return this.http.post(this.baseUrl + "product", data);
+  }
+
 }
