@@ -2,6 +2,7 @@ import { LogicalFileSystem } from '@angular/compiler-cli/src/ngtsc/file_system';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {MAT_FORM_FIELD, MatFormField, MatFormFieldControl} from '@angular/material/form-field';
+import { ProductsService } from '../services/products.service';
 @Component({
   selector: 'app-ad-form',
   templateUrl: './ad-form.component.html',
@@ -25,16 +26,13 @@ export class AdFormComponent implements OnInit {
     target: new FormControl("", [Validators.required]),
     category: new FormControl("", [Validators.required])
   });
-  constructor() { }
+  constructor(private productsService: ProductsService) { }
 
   ngOnInit(): void {
   }
 
   createAd() {
-    console.log("Button click");
-    
-    console.log(this.createForm.value);
-    
+    this.productsService.createNewProduct({...this.createForm.value, price: +this.createForm.value.price, age: +this.createForm.value.age}).subscribe(res => {});
   }
 
 }
