@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>{{data.ID}}</h1>
+<div mat-dialog-content>
+    you are deleting {{ data.title }}
+    This is an irreversible action. Do you really want to do this?
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" mat-dialog-close>Close</button>
+  <button mat-raised-button color="warn" (click)="deleteAd(data.ID)"> Delete </button>
+</div>
