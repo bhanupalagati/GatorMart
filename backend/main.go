@@ -19,12 +19,14 @@ func Routers(app *fiber.App) {
 	app.Get("/product/:id", products.GetProduct)
 	app.Put("/product/:id", products.UpdateProduct)
 	app.Delete("/product/:id", products.DeleteProduct)
+	app.Post("/upload", products.HandleFileUpload)
 }
 
 func main() {
 	products.InitialMigration()
 	app := fiber.New()
 	app.Use(cors.New())
+	app.Static("/images", "./images")
 	Routers(app)
 	// app.Get("/login", Login)
 	// app.Post("/user", users.SaveUser)
