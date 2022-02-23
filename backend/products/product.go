@@ -155,16 +155,26 @@ func UploadImage(c *fiber.Ctx) error {
 	uploader := s3manager.NewUploader(sess)
 	MyBucket = GetEnvWithKey("BUCKET_NAME")
 	//file, header, err := c.FormFile("photo")
-	//file,err := c.FormFile("photo")
-	file, err := os.Open("photo")
-	filename := file.Name()
+	file, err := c.FormFile("photo")
+	if err != nil {
+
+		log.Println("image save error --> ", err)
+		return c.JSON(fiber.Map{"status": 500, "message": "Server error", "data": nil})
+	}
+	filename := file.Filename
+	f, err := file.Open()
+	if err != nil {
+
+		log.Println("image save error --> ", err)
+		return c.JSON(fiber.Map{"status": 500, "message": "Server error", "data": nil})
+	}
 	//filename :=file.Header.Filename
 	//upload to the s3 bucket
 	up, err := uploader.Upload(&s3manager.UploadInput{
 		Bucket: aws.String(MyBucket),
 		ACL:    aws.String("public-read"),
 		Key:    aws.String(filename),
-		Body:   file,
+		Body:   f,
 	})
 	if err != nil {
 
@@ -179,8 +189,8 @@ func UploadImage(c *fiber.Ctx) error {
 
 		//"imageName": image,
 		"imageUrl": filepath,
-		// "header":    file.,
-		// "size":      file.Size,
+		"header":   file.Header,
+		"size":     file.Size,
 	}
 
 	return c.JSON(fiber.Map{"status": 201, "message": "Image uploaded successfully", "data": data})
