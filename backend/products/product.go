@@ -3,11 +3,56 @@ package products
 import (
 	"errors"
 	"fmt"
+	"log"
+	"os"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 )
+
+var AccessKeyID string
+var SecretAccessKey string
+var MyRegion string
+var MyBucket string
+var filepath string
+
+func ConnectAws() *session.Session {
+	AccessKeyID = GetEnvWithKey("AWS_ACCESS_KEY_ID")
+	SecretAccessKey = GetEnvWithKey("AWS_SECRET_ACCESS_KEY")
+	MyRegion = GetEnvWithKey("AWS_REGION")
+	sess, err := session.NewSession(
+		&aws.Config{
+			Region: aws.String(MyRegion),
+			Credentials: credentials.NewStaticCredentials(
+				AccessKeyID,
+				SecretAccessKey,
+				"", // a token will be created when the session it's used.
+			),
+		})
+	if err != nil {
+		panic(err)
+	}
+	return sess
+}
+
+func GetEnvWithKey(key string) string {
+	return os.Getenv(key)
+}
+
+func LoadEnv() {
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+		os.Exit(1)
+	}
+}
 
 var DB *gorm.DB
 var err error
@@ -102,4 +147,42 @@ func DeleteProduct(c *fiber.Ctx) error {
 	}
 	DB.Delete(&product)
 	return c.SendString("Product ad is deleted")
+}
+
+func UploadImage(c *fiber.Ctx) error {
+	LoadEnv()
+	sess := ConnectAws()
+	uploader := s3manager.NewUploader(sess)
+	MyBucket = GetEnvWithKey("BUCKET_NAME")
+	//file, header, err := c.FormFile("photo")
+	//file,err := c.FormFile("photo")
+	file, err := os.Open("photo")
+	filename := file.Name()
+	//filename :=file.Header.Filename
+	//upload to the s3 bucket
+	up, err := uploader.Upload(&s3manager.UploadInput{
+		Bucket: aws.String(MyBucket),
+		ACL:    aws.String("public-read"),
+		Key:    aws.String(filename),
+		Body:   file,
+	})
+	if err != nil {
+
+		log.Println("image save error --> ", err)
+		return c.JSON(fiber.Map{"status": 500, "message": "Server error", "uploader": up, "data": nil})
+	}
+	filepath = "https://" + MyBucket + "." + "s3-" + MyRegion + ".amazonaws.com/" + filename
+	//  c.JSON(http.StatusOK, gin.H{
+	//   "filepath":    filepath,
+	//  })
+	data := map[string]interface{}{
+
+		//"imageName": image,
+		"imageUrl": filepath,
+		// "header":    file.,
+		// "size":      file.Size,
+	}
+
+	return c.JSON(fiber.Map{"status": 201, "message": "Image uploaded successfully", "data": data})
+
 }
