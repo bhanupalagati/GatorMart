@@ -93,7 +93,7 @@ func InitialMigration() {
 func SaveProduct(c *fiber.Ctx) error {
 	product := new(Product)
 	if err := c.BodyParser(product); err != nil {
-		return c.Status(400).SendString(err.Error())
+		return c.Status(400).JSON(err.Error())
 	}
 	DB.Create(&product)
 	return c.JSON(&product)
@@ -128,7 +128,7 @@ func UpdateProduct(c *fiber.Ctx) error {
 		return errors.New("product id doesnt exist")
 	}
 	if err := c.BodyParser(product); err != nil {
-		return c.Status(400).SendString(err.Error())
+		return c.Status(400).JSON(err.Error())
 	}
 	DB.Save(&product)
 	return c.JSON(&product)
@@ -146,7 +146,7 @@ func DeleteProduct(c *fiber.Ctx) error {
 		return errors.New("product id doesnt exist")
 	}
 	DB.Delete(&product)
-	return c.SendString("Product ad is deleted")
+	return c.JSON("Product ad is deleted")
 }
 
 func UploadImage(c *fiber.Ctx) error {
