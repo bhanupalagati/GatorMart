@@ -179,6 +179,7 @@ func UploadImage(c *fiber.Ctx) error {
 		}
 		//filename :=file.Header.Filename
 		//upload to the s3 bucket
+		//To-do check ACL settings
 		up, err := uploader.Upload(&s3manager.UploadInput{
 			Bucket: aws.String(MyBucket),
 			ACL:    aws.String("private"),
