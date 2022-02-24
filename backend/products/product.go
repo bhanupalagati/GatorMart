@@ -154,43 +154,91 @@ func UploadImage(c *fiber.Ctx) error {
 	sess := ConnectAws()
 	uploader := s3manager.NewUploader(sess)
 	MyBucket = GetEnvWithKey("BUCKET_NAME")
+	form, err := c.MultipartForm()
+	if err != nil {
+
+		log.Println("error while reading mutipart form, --> ", err)
+		return c.JSON(fiber.Map{"status": 500, "message": "Server error", "data": nil})
+	}
+	files := form.File["photo"]
+
+	var pathUrls []string
+	var imageNameList []string
+	//var headerList []string
+	var sizeList []int64
+
+	for _, file := range files {
+
+		filename := file.Filename
+		//fmt.Println(" Reached 2 filename :", filename)
+		f, err := file.Open()
+		if err != nil {
+
+			log.Println("error while trying to Open file --> ", err)
+			return c.JSON(fiber.Map{"status": 500, "message": "Server error", "data": nil})
+		}
+		//filename :=file.Header.Filename
+		//upload to the s3 bucket
+		up, err := uploader.Upload(&s3manager.UploadInput{
+			Bucket: aws.String(MyBucket),
+			ACL:    aws.String("private"),
+			Key:    aws.String(filename),
+			Body:   f,
+		})
+		if err != nil {
+
+			log.Println("error while uploading image to S3 bucket --> ", err)
+			return c.JSON(fiber.Map{"status": 500, "message": "Server error", "uploader": up, "data": nil})
+		}
+		//filepath = "https://" + MyBucket + "." + "s3-" + MyRegion + ".amazonaws.com/" + filename
+		filepath = "https://" + MyBucket + "." + "s3" + ".amazonaws.com/" + filename
+
+		pathUrls = append(pathUrls, filepath)
+		imageNameList = append(imageNameList, filename)
+		sizeList = append(sizeList, file.Size)
+
+	}
+
 	//file, header, err := c.FormFile("photo")
-	file, err := c.FormFile("photo")
-	if err != nil {
+	// file, err := c.FormFile("photo")
+	// fmt.Println(" Reached 1")
+	// if err != nil {
 
-		log.Println("image save error --> ", err)
-		return c.JSON(fiber.Map{"status": 500, "message": "Server error", "data": nil})
-	}
-	filename := file.Filename
-	f, err := file.Open()
-	if err != nil {
+	// 	log.Println("image save error --> ", err)
+	// 	return c.JSON(fiber.Map{"status": 500, "message": "Server error", "data": nil})
+	// }
+	// fmt.Println(" Reached 2-0")
+	//filename := file.Filename
+	// fmt.Println(" Reached 2 filename :", filename)
+	// f, err := file.Open()
+	// if err != nil {
 
-		log.Println("image save error --> ", err)
-		return c.JSON(fiber.Map{"status": 500, "message": "Server error", "data": nil})
-	}
-	//filename :=file.Header.Filename
-	//upload to the s3 bucket
-	up, err := uploader.Upload(&s3manager.UploadInput{
-		Bucket: aws.String(MyBucket),
-		ACL:    aws.String("public-read"),
-		Key:    aws.String(filename),
-		Body:   f,
-	})
-	if err != nil {
+	// 	log.Println("image save error --> ", err)
+	// 	return c.JSON(fiber.Map{"status": 500, "message": "Server error", "data": nil})
+	// }
+	// //filename :=file.Header.Filename
+	// //upload to the s3 bucket
+	// up, err := uploader.Upload(&s3manager.UploadInput{
+	// 	Bucket: aws.String(MyBucket),
+	// 	ACL:    aws.String("public-read"),
+	// 	Key:    aws.String(filename),
+	// 	Body:   f,
+	// })
+	// if err != nil {
 
-		log.Println("image save error --> ", err)
-		return c.JSON(fiber.Map{"status": 500, "message": "Server error", "uploader": up, "data": nil})
-	}
-	filepath = "https://" + MyBucket + "." + "s3-" + MyRegion + ".amazonaws.com/" + filename
-	//  c.JSON(http.StatusOK, gin.H{
-	//   "filepath":    filepath,
-	//  })
+	// 	log.Println("tttimage save error --> ", err)
+	// 	return c.JSON(fiber.Map{"status": 500, "message": "Server error", "uploader": up, "data": nil})
+	// }
+	// filepath = "https://" + MyBucket + "." + "s3-" + MyRegion + ".amazonaws.com/" + filename
+	// //  c.JSON(http.StatusOK, gin.H{
+	// //   "filepath":    filepath,
+	// //  })
 	data := map[string]interface{}{
 
-		//"imageName": image,
-		"imageUrl": filepath,
-		"header":   file.Header,
-		"size":     file.Size,
+		"imageName": imageNameList,
+		"imageUrl":  pathUrls,
+		// "header":   file.Header,
+		"size": sizeList,
 	}
 
 	return c.JSON(fiber.Map{"status": 201, "message": "Image uploaded successfully", "data": data})
