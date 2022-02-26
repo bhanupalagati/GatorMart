@@ -26,7 +26,7 @@ export class ProductDetailsComponent implements OnInit {
   fetchProduct() {
     this.productService.getProductDetails(this.id).subscribe(res => {
       this.product = res;
-      this.images = product.images.split(",");
+      this.images = this.product.images.split(",");
       this.loading = false;
     });
   }

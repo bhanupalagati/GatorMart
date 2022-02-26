@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Product } from '../interfaces/product.interface';
 import { ProductsService } from '../services/products.service';
 
@@ -10,14 +11,17 @@ import { ProductsService } from '../services/products.service';
 })
 export class DeletePopUpComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<DeletePopUpComponent>, @Inject(MAT_DIALOG_DATA) public data: Product, private productsService: ProductsService) { }
+  constructor(public dialogRef: MatDialogRef<DeletePopUpComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: Product,
+              private productsService: ProductsService,
+              private router: Router) { }
 
   ngOnInit(): void {
   }
 
   deleteAd(id) {
     this.productsService.deleteProduct(this.data.ID).subscribe(res => {
-      console.log("here is something");
+      this.router.navigate(['/']);
     });
     this.dialogRef.close();
   }
