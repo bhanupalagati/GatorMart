@@ -25,4 +25,7 @@ export class ProductsService {
     return this.http.delete(this.baseUrl + "product/"+id)
   }
 
+  uploadImages(imageData) {
+    return this.http.post(this.baseUrl + "product/upload", imageData)
+  }
 }
