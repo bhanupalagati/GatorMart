@@ -231,34 +231,25 @@ func Logout(c *fiber.Ctx) error {
 }
 
 func User(c *fiber.Ctx) error {
-
 	cookie := c.Cookies("cookie")
 
 	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
-
 		return []byte(KeyForAuthentication), nil
 
 	})
 
 	if err != nil {
-
 		c.Status(fiber.StatusUnauthorized)
-
 		return c.JSON(fiber.Map{
-
 			"message": "User unauthenticated",
 		})
-
 	}
 
 	claims := token.Claims.(*jwt.StandardClaims)
 
 	var user models.User
-
 	DB.Where("id=?", claims.Issuer).First(&user)
-
 	return c.JSON(user)
-
 }
 
 func SaveProduct(c *fiber.Ctx) error {
