@@ -19,6 +19,7 @@ describe('LoaderComponent', () => {
     fixture.detectChanges();
   });
 
+  //test file working fine for the loading file page.
   it('should create', () => {
     expect(component).toBeTruthy();
   });
