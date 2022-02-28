@@ -4,22 +4,17 @@ import (
 	"errors"
 	"fmt"
 	"log"
-	"main/models"
 	"os"
-	"strconv"
-	"time"
-	"unicode"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/joho/godotenv"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
-	"github.com/dgrijalva/jwt-go/v4"
-	"github.com/gofiber/fiber/v2"
-	"github.com/joho/godotenv"
-	"golang.org/x/crypto/bcrypt"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
 )
 
 var AccessKeyID string
@@ -64,205 +59,39 @@ var err error
 
 const DNS = "root:Mysql@048@tcp(127.0.0.1:3306)/godbgator1?charset=utf8mb4&parseTime=True&loc=Local"
 
+type Product struct {
+	gorm.Model
+	Title             string `json:"title"`
+	SecondaryTitle    string `json:"secondary_title"`
+	ImageUrl          string `json:"imageUrl"`
+	Price             int    `json:"price"`
+	SimpleDescription string `json:"simple_desc"`
+	Description       string `json:"description"`
+	City              string `json:"city"`
+	State             string `json:"state"`
+	Location_Lat      string `json:"location_lat"`
+	Location_Long     string `json:"location_long"`
+	Target            string `json:"target"`
+	Category          string `json:"category"`
+	PostedBy          string `json:"posted_by"`
+	PostedDate        string `json:"posted_date"`
+	Condition         string `json:"condition"`
+	Age               int    `json:"age"`
+	AdStatus          string `json:"status"`
+	Images            string `json:"images"`
+}
+
 func InitialMigration() {
 	DB, err = gorm.Open(mysql.Open(DNS), &gorm.Config{})
 	if err != nil {
 		fmt.Println(err.Error())
 		panic("Cannot connect to Database")
 	}
-	DB.AutoMigrate(&models.Product{})
-	DB.AutoMigrate(&models.User{})
-}
-
-//User Management
-const KeyForAuthentication = "secret"
-
-type RegisterRequest struct {
-	Name     string `json:"name"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
-}
-
-func Register(c *fiber.Ctx) error {
-	registerUser := new(RegisterRequest)
-
-	if err := c.BodyParser(registerUser); err != nil {
-		fmt.Println("error")
-		return c.Status(400).JSON(err.Error())
-	}
-
-	fmt.Println(registerUser.Name + "" + registerUser.Email + "-> " + string(registerUser.Password))
-
-	var nameAlphaNumeric = true
-	for _, char := range registerUser.Name {
-		// func IsLetter(r rune) bool, func IsNumber(r rune) bool
-		// if !unicode.IsLetter(char) && !unicode.IsNumber(char) {
-		if unicode.IsLetter(char) == false && unicode.IsNumber(char) == false {
-			nameAlphaNumeric = false
-		}
-	}
-
-	// check username pswdLength
-	var nameLength bool
-	if 5 <= len(registerUser.Name) && len(registerUser.Name) <= 50 {
-		nameLength = true
-	}
-	// variables that must pass for password creation criteria
-	var pswdLowercase, pswdUppercase, pswdNumber, pswdSpecial, pswdLength, pswdNoSpaces bool
-	pswdNoSpaces = true
-	for _, char := range string(registerUser.Password) {
-		switch {
-		// func IsLower(r rune) bool
-		case unicode.IsLower(char):
-			pswdLowercase = true
-		// func IsUpper(r rune) bool
-		case unicode.IsUpper(char):
-			pswdUppercase = true
-		// func IsNumber(r rune) bool
-		case unicode.IsNumber(char):
-			pswdNumber = true
-		// func IsPunct(r rune) bool, func IsSymbol(r rune) bool
-		case unicode.IsPunct(char) || unicode.IsSymbol(char):
-			pswdSpecial = true
-		// func IsSpace(r rune) bool, type rune = int32
-		case unicode.IsSpace(int32(char)):
-			pswdNoSpaces = false
-		}
-	}
-	fmt.Println(len(registerUser.Password))
-	if 11 < len(registerUser.Password) && len(registerUser.Password) < 60 {
-		pswdLength = true
-	}
-	fmt.Println("pswdLowercase:", pswdLowercase, "\npswdUppercase:", pswdUppercase, "\npswdNumber:", pswdNumber, "\npswdSpecial:", pswdSpecial, "\npswdLength:", pswdLength, "\npswdNoSpaces:", pswdNoSpaces, "\nnameAlphaNumeric:", nameAlphaNumeric, "\nnameLength:", nameLength)
-	if !pswdLowercase || !pswdUppercase || !pswdNumber || !pswdSpecial || !pswdLength || !pswdNoSpaces || !nameAlphaNumeric || !nameLength {
-
-		return c.Status(400).JSON(fiber.Map{
-			"message": "please check username and password criteria",
-		})
-	}
-
-	password, _ := bcrypt.GenerateFromPassword([]byte(registerUser.Password), bcrypt.DefaultCost)
-	user := new(models.User)
-	user.Name = registerUser.Name
-	user.Email = registerUser.Email
-	user.Password = password
-
-	DB.Create(&user)
-
-	return c.JSON(&user)
-
-}
-
-func Login(c *fiber.Ctx) error {
-	user := new(RegisterRequest)
-
-	if err := c.BodyParser(user); err != nil {
-		return c.Status(400).JSON(err.Error())
-	}
-
-	//var user models.User
-	dbUser := new(models.User)
-	fmt.Println(user.Email + "->")
-	DB.Where("email= ?", user.Email).First(&dbUser)
-	//DB.First(&dbUser, usr.Email)
-	//database.DB.Where("email= ?", data["email"]).First(&user)
-	fmt.Println(dbUser.ID, dbUser.Email)
-	if dbUser.ID == 0 {
-		c.Status(fiber.StatusNotFound)
-		return c.JSON(fiber.Map{
-			"message": "user not found",
-		})
-	}
-	fmt.Println("====")
-	fmt.Println(dbUser.Password)
-	fmt.Println("====")
-	fmt.Println(user.Password)
-	if err := bcrypt.CompareHashAndPassword(dbUser.Password, []byte(user.Password)); err != nil {
-		c.Status(fiber.StatusBadRequest)
-		return c.JSON(fiber.Map{
-			"message": "incorrect password",
-		})
-	}
-
-	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.StandardClaims{
-		Issuer: strconv.Itoa(int(dbUser.ID)),
-	})
-
-	token, err := claims.SignedString([]byte(KeyForAuthentication))
-
-	if err != nil {
-		c.Status(fiber.StatusInternalServerError)
-		return c.JSON(fiber.Map{
-			"message": "user could not login",
-		})
-	}
-
-	cookie := fiber.Cookie{
-		Name:     "cookie",
-		Value:    token,
-		Expires:  time.Now().Add(time.Hour * 24),
-		HTTPOnly: true,
-	}
-
-	c.Cookie(&cookie)
-	return c.JSON(fiber.Map{
-		"message": "login success",
-		"token":   token,
-		"cookie":  cookie,
-	})
-
-}
-
-func Logout(c *fiber.Ctx) error {
-	cookie := fiber.Cookie{
-		Name:     "cookie",
-		Value:    "",
-		Expires:  time.Now().Add(-time.Hour),
-		HTTPOnly: true,
-	}
-
-	c.Cookie(&cookie)
-
-	return c.JSON(fiber.Map{
-		"message": "logout successful ",
-
-		"cookie": cookie,
-	})
-}
-
-func User(c *fiber.Ctx) error {
-
-	cookie := c.Cookies("cookie")
-
-	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
-
-		return []byte(KeyForAuthentication), nil
-
-	})
-
-	if err != nil {
-
-		c.Status(fiber.StatusUnauthorized)
-
-		return c.JSON(fiber.Map{
-
-			"message": "User unauthenticated",
-		})
-
-	}
-
-	claims := token.Claims.(*jwt.StandardClaims)
-
-	var user models.User
-
-	DB.Where("id=?", claims.Issuer).First(&user)
-
-	return c.JSON(user)
-
+	DB.AutoMigrate(&Product{})
 }
 
 func SaveProduct(c *fiber.Ctx) error {
-	product := new(models.Product)
+	product := new(Product)
 	if err := c.BodyParser(product); err != nil {
 		return c.Status(400).JSON(err.Error())
 	}
@@ -270,7 +99,7 @@ func SaveProduct(c *fiber.Ctx) error {
 	return c.JSON(&product)
 }
 func GetProducts(c *fiber.Ctx) error {
-	var products []models.Product
+	var products []Product
 	DB.Find(&products)
 	return c.JSON(&products)
 }
@@ -280,7 +109,7 @@ func GetProduct(c *fiber.Ctx) error {
 	if err != nil {
 		return c.Status(400).JSON("Please make sure that :id is an integer")
 	}
-	var product models.Product
+	var product Product
 	DB.Find(&product, id)
 	if product.ID == 0 {
 		return errors.New("product id doesnt exist")
@@ -288,12 +117,13 @@ func GetProduct(c *fiber.Ctx) error {
 	return c.JSON(&product)
 }
 
+
 func UpdateProduct(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON("Please make sure that :id is an integer")
 	}
-	product := new(models.Product)
+	product := new(Product)
 	DB.First(&product, id)
 	if product.ID == 0 {
 		return errors.New("product id doesnt exist")
@@ -311,7 +141,7 @@ func DeleteProduct(c *fiber.Ctx) error {
 	if err != nil {
 		return c.Status(400).JSON("Please make sure that :id is an integer")
 	}
-	var product models.Product
+	var product Product
 	DB.First(&product, id)
 	if product.ID == 0 {
 		return errors.New("product id doesnt exist")
