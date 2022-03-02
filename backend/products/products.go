@@ -230,38 +230,41 @@ func Logout(c *fiber.Ctx) error {
 	})
 }
 
-func User(c *fiber.Ctx) error {
-
+func UserAuthorized(c *fiber.Ctx) (models.User, bool) {
 	cookie := c.Cookies("cookie")
 
-	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
+	authorised := false
+	var user models.User
 
+	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
 		return []byte(KeyForAuthentication), nil
 
 	})
 
 	if err != nil {
-
 		c.Status(fiber.StatusUnauthorized)
-
-		return c.JSON(fiber.Map{
-
-			"message": "User unauthenticated",
-		})
-
+		// return c.JSON(fiber.Map{
+		// 	"message": "User unauthenticated",
+		// })
+		return user, authorised
 	}
 
 	claims := token.Claims.(*jwt.StandardClaims)
 
-	var user models.User
-
+	// var user models.User
 	DB.Where("id=?", claims.Issuer).First(&user)
+	if user.ID != 0 {
+		authorised = true
+	}
 
-	return c.JSON(user)
-
+	return user, authorised
 }
 
 func SaveProduct(c *fiber.Ctx) error {
+	_, authorized := UserAuthorized(c)
+	if !authorized {
+		return c.Status(401).JSON("User not authorized")
+	}
 	product := new(models.Product)
 	if err := c.BodyParser(product); err != nil {
 		return c.Status(400).JSON(err.Error())
@@ -270,12 +273,20 @@ func SaveProduct(c *fiber.Ctx) error {
 	return c.JSON(&product)
 }
 func GetProducts(c *fiber.Ctx) error {
+	_, authorized := UserAuthorized(c)
+	if !authorized {
+		return c.Status(401).JSON("User not authorized")
+	}
 	var products []models.Product
 	DB.Find(&products)
 	return c.JSON(&products)
 }
 
 func GetProduct(c *fiber.Ctx) error {
+	_, authorized := UserAuthorized(c)
+	if !authorized {
+		return c.Status(401).JSON("User not authorized")
+	}
 	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON("Please make sure that :id is an integer")
@@ -289,6 +300,10 @@ func GetProduct(c *fiber.Ctx) error {
 }
 
 func UpdateProduct(c *fiber.Ctx) error {
+	_, authorized := UserAuthorized(c)
+	if !authorized {
+		return c.Status(401).JSON("User not authorized")
+	}
 	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON("Please make sure that :id is an integer")
@@ -307,6 +322,10 @@ func UpdateProduct(c *fiber.Ctx) error {
 }
 
 func DeleteProduct(c *fiber.Ctx) error {
+	_, authorized := UserAuthorized(c)
+	if !authorized {
+		return c.Status(401).JSON("User not authorized")
+	}
 	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON("Please make sure that :id is an integer")
@@ -321,6 +340,10 @@ func DeleteProduct(c *fiber.Ctx) error {
 }
 
 func UploadImage(c *fiber.Ctx) error {
+	_, authorized := UserAuthorized(c)
+	if !authorized {
+		return c.Status(401).JSON("User not authorized")
+	}
 	LoadEnv()
 	sess := ConnectAws()
 	uploader := s3manager.NewUploader(sess)
