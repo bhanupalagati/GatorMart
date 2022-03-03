@@ -7,6 +7,7 @@ describe('Create a product test', function () {
     })
 
     it('Interacting with the 1st image field', function() {
+        //adding the relative path - get the images for the fixtures
         const main_image = 'cypress/fixtures/images/phone.png'
         cy.get('div [class="ad_form_container__flex__input"]')
         .eq(0)
@@ -45,7 +46,7 @@ describe('Create a product test', function () {
         //City
         cy.get('input')
         .eq(8)
-        .type('Miami')
+        .type('Vizagville')
         //State
         cy.get('input')
         .eq(9)
