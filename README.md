@@ -27,7 +27,7 @@ Although it seems like a trivial filter it allows users to buy or sell quickly b
 
 ### DataBase
 
-* MongoDB
+* MySQL
 
 
 # Team Members
