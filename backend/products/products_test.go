@@ -100,6 +100,16 @@ func TestGetProducts(t *testing.T) {
 
 			expectedCode: 200,
 		},
+		// Second test case
+
+		{
+
+			description: "get HTTP status 404, when route is not exists",
+
+			route: "/not-found",
+
+			expectedCode: 404,
+		},
 	}
 
 	// Define Fiber app.
@@ -160,6 +170,16 @@ func TestGetProduct(t *testing.T) {
 			route: "/product",
 
 			expectedCode: 200,
+		},
+		// Second test case
+
+		{
+
+			description: "get HTTP status 404, when route is not exists",
+
+			route: "/not-found",
+
+			expectedCode: 404,
 		},
 	}
 
@@ -223,6 +243,16 @@ func TestUpdateProduct(t *testing.T) {
 
 			expectedCode: 200,
 		},
+		// Second test case
+
+		{
+
+			description: "get HTTP status 404, when route is not exists",
+
+			route: "/not-found",
+
+			expectedCode: 404,
+		},
 	}
 
 	// Define Fiber app.
@@ -283,6 +313,16 @@ func TestDeleteProduct(t *testing.T) {
 			route: "/product",
 
 			expectedCode: 200,
+		},
+		// Second test case
+
+		{
+
+			description: "get HTTP status 404, when route is not exists",
+
+			route: "/not-found",
+
+			expectedCode: 404,
 		},
 	}
 
