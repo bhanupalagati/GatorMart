@@ -8,13 +8,13 @@ describe('Create a product test', function () {
 
     it('Interacting with the 1st image field', function() {
         //adding the relative path - get the images for the fixtures
-        const main_image = 'cypress/fixtures/images/phone.png'
+        const main_image = 'cypress/fixtures/images/elec.jpg'
         cy.get('div [class="ad_form_container__flex__input"]')
         .eq(0)
         .find('input').selectFile(main_image)        
     })
     it('Interacting with the 2nd image field', function() {
-        const detailed_images = 'cypress/fixtures/images/phonebox.png'
+        const detailed_images = 'cypress/fixtures/images/gadgets.jpeg'
         cy.get('div [class="ad_form_container__flex__input"]')
         .eq(1)
         .find('input').selectFile(detailed_images)        
@@ -23,11 +23,11 @@ describe('Create a product test', function () {
         //Title
         cy.get('input')
         .eq(2)
-        .type('Cypress iPhone 1') 
+        .type('Cypress Electronics') 
         //Seconday Title
         cy.get('input')
         .eq(3)
-        .type('Secondary title Cypress iPhone 1') 
+        .type('Secondary title Electronics') 
         //Image url 
         //cy.get('input').eq(4)
         //Price
@@ -46,7 +46,7 @@ describe('Create a product test', function () {
         //City
         cy.get('input')
         .eq(8)
-        .type('Vizagville')
+        .type('Mysoreville')
         //State
         cy.get('input')
         .eq(9)

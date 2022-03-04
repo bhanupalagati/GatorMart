@@ -15,13 +15,12 @@ describe('Deleting a product', function () {
     it('scroll to the remove button', function() {
         cy.scrollTo('bottom')
     })
-
+    
     it('Click the Remove da button', function() {
         cy.get('button')
         .eq(1)
         .click()
     })
-    
     //Use the fourth button, second button
     //will only reload the delete ad pop up button
     it('Delete the ad', function() {
