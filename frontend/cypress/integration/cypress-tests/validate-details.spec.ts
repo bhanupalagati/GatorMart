@@ -1,5 +1,9 @@
 /// <reference types="cypress" />
 
+//Test Objective 
+//Tests created by the user are randomly selected and
+//the input details are verified.
+
 describe('Access', function () {
     beforeEach(() => {
         cy.visit('http://localhost:4200/')

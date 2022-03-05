@@ -1,5 +1,10 @@
 /// <reference types="cypress" />
 
+//Test objective: 
+// The objective of the test is to access the main website
+// Select the second product listed on the website
+// Load the product in the detailed view and navigate the carousel
+
 describe('Access Test', function () {
     //Accessing the list of products:
     beforeEach(() => {

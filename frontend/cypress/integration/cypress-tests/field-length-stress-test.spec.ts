@@ -1,5 +1,10 @@
 /// <reference types="cypress" />
 
+//Test Objective
+//The objective of this test is to check the input for correct size constraints.
+//Here we will attempt to inject values of extreamly large sizes and expect the 
+//application to reject the request.
+
 describe('Create page', function () {
     it('Access the page', function() {
         cy.visit('http://localhost:4200/create')
