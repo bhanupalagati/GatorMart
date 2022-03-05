@@ -1,5 +1,9 @@
 /// <reference types="cypress" />
 
+//Test Objective
+//The home page will be accessed and the first product is selected
+//then moved into the detailed view and product will be deleted.
+
 describe('Deleting a product', function () {
     it('Access the page', function() {
         cy.visit('http://localhost:4200/')

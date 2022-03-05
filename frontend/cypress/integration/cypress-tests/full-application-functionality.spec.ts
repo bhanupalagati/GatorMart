@@ -1,8 +1,9 @@
 /// <reference types="cypress" />
 
-//Testing all the applicaiton functionality and 
-//adding multiple products and checking the 
-//output for the flaws
+//Test Objective 
+//This is a full scale application test, the main home page is accessed. Then 
+//multiple products are created, then the details of the created products are 
+//verified and then they are removed from the store.
 
 describe('Access main page', function () {
     it('Hitting the backend', function() {

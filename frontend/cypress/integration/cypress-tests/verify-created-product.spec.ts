@@ -1,5 +1,9 @@
 /// <reference types="cypress" />
 
+//Test Objective 
+//The create product page is accessed and the product is created.
+//Then the details of the created products is verified.
+
 describe('Start product creation', function () {
     it('Access the page', function() {
         cy.visit('http://localhost:4200/create')

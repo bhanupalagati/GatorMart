@@ -1,9 +1,10 @@
 /// <reference types="cypress" />
 
-
+//Test objective: 
 //The application should allow a maximum of 4 images for the carousel.
-// Test case simultaniously uploads 5 images and 1 for the main image.
-// If it fails, the test case is a pass.
+//This test case will simultaniously upload 5 images and 1 for the main image.
+//If it fails, the test case is a pass.
+
 describe('Create a new product for carousel test', function () {
 
     it('Access the page', function() {

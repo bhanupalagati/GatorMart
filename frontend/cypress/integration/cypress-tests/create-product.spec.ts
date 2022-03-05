@@ -1,5 +1,9 @@
 /// <reference types="cypress" />
 
+//Test Objective
+//The create page will be accessed and images from the cypress 
+//fixtures are loaded and a new product is created.
+
 describe('Create a product test', function () {
     it('Access the page', function() {
         cy.visit('http://localhost:4200/create')
