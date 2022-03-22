@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductsService } from '../services/products.service';
+import { EditFormService } from './edit-form.service';
 @Component({
   selector: 'app-ad-form',
   templateUrl: './ad-form.component.html',
   styleUrls: ['./ad-form.component.scss']
 })
 export class AdFormComponent implements OnInit {
+  @Input() request;
   formData = new FormData();
   createForm: FormGroup = new FormGroup({
     title: new FormControl("", [Validators.required]),
@@ -26,13 +28,32 @@ export class AdFormComponent implements OnInit {
     target: new FormControl("", [Validators.required]),
     category: new FormControl("", [Validators.required])
   });
-  constructor(private productsService: ProductsService, private router: Router) { }
+  constructor(private productsService: ProductsService, private router: Router, private editFormService: EditFormService) { }
 
   ngOnInit(): void {
+    if (this.request === 'edit') {
+      this.populateEditForm();
+    }
   }
 
+  populateEditForm() {    
+    this.createForm.setValue({...this.editFormService.getFormData()});
+  }
+  submitAdd() {
+    if (this.request === 'create') {
+      this.createAd();
+    } else {
+      this.updateAd();
+    }
+  }
   createAd() {
     this.productsService.createNewProduct({...this.createForm.value, price: +this.createForm.value.price, age: +this.createForm.value.age}).subscribe(res => {
+      this.router.navigate(['/']);
+    });
+  }
+
+  updateAd() {
+    this.productsService.updateProduct(this.editFormService.getProductID(), {...this.createForm.value, price: +this.createForm.value.price, age: +this.createForm.value.age}).subscribe(res => {
       this.router.navigate(['/']);
     });
   }
@@ -50,7 +71,6 @@ export class AdFormComponent implements OnInit {
   uploadAttachments(update) {
     this.productsService.uploadImages(this.formData).subscribe((res:any) => {
       this.createForm.controls[update].setValue(res.data.imageUrl.join());
-      console.log(this.createForm.value);
     })
   }
 

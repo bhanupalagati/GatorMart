@@ -23,6 +23,8 @@ import {HttpClientModule } from '@angular/common/http';
 import { LoaderComponent } from './loader/loader.component';
 import { AdFormComponent } from './ad-form/ad-form.component';
 import { DeletePopUpComponent } from './delete-pop-up/delete-pop-up.component';
+import { CreateAddComponent } from './create-add/create-add.component';
+import { EditAddComponent } from './edit-add/edit-add.component';
 
 const materialImports = [
   MatCardModule,
@@ -40,7 +42,9 @@ const materialImports = [
     ProductDetailsComponent,
     LoaderComponent,
     AdFormComponent,
-    DeletePopUpComponent
+    DeletePopUpComponent,
+    CreateAddComponent,
+    EditAddComponent
   ],
   imports: [
     BrowserModule,

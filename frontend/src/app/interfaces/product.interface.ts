@@ -17,7 +17,8 @@ export type Product = {
     status: "Deleted" | "Sold" | "Active",
     images: string,
     target: string,
-    category: string
+    category: string,
+    CreatedAt?: Date
 }
 
 export type ProductResponse = {
