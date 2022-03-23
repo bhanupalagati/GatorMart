@@ -6,9 +6,13 @@ March 4th, 2022
 
 # Team Members:
 
+**Frontend:**
+
 Nitin Ramesh
 
 Bhanu Prakash Reddy Palagati
+
+**Backend:**
 
 Vamsi Krishna Reddy Komareddy
 
