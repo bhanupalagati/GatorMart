@@ -7,9 +7,13 @@ Sprint 1
 
 Team Members:
 
+**Frontend:**
+
 Nitin Ramesh
 
 Bhanu Prakash Reddy Palagati
+
+**Backend:**
 
 Vamsi Krishna Reddy
 
