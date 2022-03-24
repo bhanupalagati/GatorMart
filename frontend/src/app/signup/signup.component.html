@@ -1,0 +1,34 @@
+<div class="signup-container">
+    <div class="signup-container__form" [formGroup]="signUpForm">
+        <h1>SignUp Form</h1>
+        <mat-form-field appearance="outline" class="ad_form_container__flex__input">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="gatormartuser@ufl.edu" formControlName="email">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="ad_form_container__flex__input">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" type="password">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="ad_form_container__flex__input">
+            <mat-label>Retype Password</mat-label>
+            <input matInput formControlName="password2">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="ad_form_container__flex__input">
+            <mat-label>Profession</mat-label>
+            <input matInput placeholder="Student" formControlName="profession">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="ad_form_container__flex__input">
+            <mat-label>firstname</mat-label>
+            <input matInput type="firstname" formControlName="firstname">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="ad_form_container__flex__input">
+            <mat-label>lastname</mat-label>
+            <input matInput formControlName="lastname">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="ad_form_container__flex__input">
+            <mat-label>DOB</mat-label>
+            <input matInput formControlName="DOB" type="date">
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="signup()" [disabled]="signUpForm.invalid">signup</button>
+    </div>
+</div>
