@@ -25,6 +25,8 @@ import { AdFormComponent } from './ad-form/ad-form.component';
 import { DeletePopUpComponent } from './delete-pop-up/delete-pop-up.component';
 import { CreateAddComponent } from './create-add/create-add.component';
 import { EditAddComponent } from './edit-add/edit-add.component';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
 
 const materialImports = [
   MatCardModule,
@@ -44,7 +46,9 @@ const materialImports = [
     AdFormComponent,
     DeletePopUpComponent,
     CreateAddComponent,
-    EditAddComponent
+    EditAddComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
