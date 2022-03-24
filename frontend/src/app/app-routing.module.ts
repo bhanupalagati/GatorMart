@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AdFormComponent } from './ad-form/ad-form.component';
 import { CreateAddComponent } from './create-add/create-add.component';
 import { EditAddComponent } from './edit-add/edit-add.component';
+import { LoginComponent } from './login/login.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { ProductListComponent } from './product-list/product-list.component';
+import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
-  {path: '', component: ProductListComponent},
-  {path: 'login', component: ProductListComponent},
-  {path: 'signup', component: ProductListComponent},
+  {path: '', component: LoginComponent},
+  {path: 'signup', component: SignupComponent},
+  {path: 'products', component: ProductListComponent},
   {path: 'create', component: CreateAddComponent},
   {path: 'edit', component: EditAddComponent},
   {path: 'product/:id', component: ProductDetailsComponent},
