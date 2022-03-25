@@ -456,6 +456,9 @@ func FilterProducts(c *fiber.Ctx) error {
 	if filterConditions.Target != "" && filterConditions != nil {
 		res.Where("target = ?", filterConditions.Target).Find((&products))
 	}
+	if filterConditions.Category != "" && filterConditions != nil {
+		res.Where("category = ?", filterConditions.Category).Find((&products))
+	}
 
 	log.Println(fmt.Sprintf("Number of results obtained %d", len(products)))
 	return c.JSON(&products)
