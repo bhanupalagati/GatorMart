@@ -23,6 +23,7 @@ func Routers(app *fiber.App) {
 	app.Post("/gatormart/register", products.Register)
 	app.Post("/gatormart/login", products.Login)
 	app.Post("/gatormart/logout", products.Logout)
+	app.Post("/filterproducts", products.FilterProducts)
 }
 
 func main() {
