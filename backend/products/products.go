@@ -438,3 +438,23 @@ func UploadImage(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{"status": 201, "message": "Image uploaded successfully", "data": data})
 
 }
+
+func FilterProducts(c *fiber.Ctx) error {
+	// _, authorized := UserAuthorized(c)
+	// if !authorized {
+	// 	return c.Status(401).JSON("User not authorized")
+	// }
+	filterConditions := new(models.Filter)
+	if err := c.BodyParser(filterConditions); err != nil {
+		return c.Status(400).JSON(err.Error())
+	}
+	var products []models.Product
+	res := DB.Find(&products)
+	if filterConditions.Title != "" && filterConditions != nil {
+		res.Where("title LIKE ?", fmt.Sprintf("%%%s%%", filterConditions.Title)).Find(&products)
+	}
+
+	log.Println(fmt.Sprintf("Number of results obtained %d", len(products)))
+	return c.JSON(&products)
+
+}
