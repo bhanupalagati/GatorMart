@@ -459,6 +459,22 @@ func FilterProducts(c *fiber.Ctx) error {
 	if filterConditions.Category != "" && filterConditions != nil {
 		res.Where("category = ?", filterConditions.Category).Find((&products))
 	}
+	price := filterConditions.Price
+
+	if price.Operator != "" {
+		if price.Operator == "=" {
+			res.Where("price = ?", filterConditions.Price.FromValue).Find((&products))
+
+		} else if price.Operator == ">" {
+			res.Where("price > ?", filterConditions.Price.FromValue).Find((&products))
+
+		} else if price.Operator == "<" {
+			res.Where("price < ?", filterConditions.Price.ToValue).Find((&products))
+		} else if price.Operator == "between" {
+			res.Where(" price > ?", filterConditions.Price.FromValue).Where("price < ?", filterConditions.Price.ToValue).Find((&products))
+		}
+
+	}
 
 	log.Println(fmt.Sprintf("Number of results obtained %d", len(products)))
 	return c.JSON(&products)
