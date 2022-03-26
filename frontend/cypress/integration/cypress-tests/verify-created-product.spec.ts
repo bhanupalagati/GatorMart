@@ -37,7 +37,7 @@ describe('Start product creation', function () {
         .type('Florida')
         cy.get('input').eq(10)
         .type('12.1')
-        cy.get('input') .eq(11)
+        cy.get('input').eq(11)
         .type('15.1')
         cy.get('input').eq(12)
         .clear().type('New')
