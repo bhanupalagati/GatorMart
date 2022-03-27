@@ -5,6 +5,7 @@ go 1.17
 require github.com/dgrijalva/jwt-go v3.2.0+incompatible
 
 require (
+	github.com/algolia/algoliasearch-client-go/v3 v3.23.0 // indirect
 	github.com/aws/aws-sdk-go v1.43.3 // indirect
 	github.com/cosmtrek/air v1.29.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect

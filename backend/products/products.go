@@ -480,3 +480,24 @@ func FilterProducts(c *fiber.Ctx) error {
 	return c.JSON(&products)
 
 }
+
+// func FilterProductsByRadius(c *fiber.Ctx) error {
+
+// 	client := search.NewClient("GatorMart", "GatorMart")
+// 	index := client.InitIndex("GatorMart")
+// 	// res, err := index.SetSettings(search.Settings{
+// 	// 	SearchableAttributes: opt.SearchableAttributes(
+// 	// 	  "name",
+// 	// 	  "city",
+// 	// 	  "country",
+// 	// 	  "iata_code",
+// 	// 	),
+// 	// 	CustomRanking: opt.CustomRanking("desc(links_count)"),
+// 	//   })
+// 	res, err := index.Search(
+// 		"",
+// 		opt.AroundLatLng("40.71, -74.01"),
+// 		opt.AroundRadius(1000000), // 1000 km
+// 	  )
+
+// }
