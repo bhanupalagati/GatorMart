@@ -7,6 +7,7 @@ import (
 	"main/models"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 	"unicode"
 
@@ -78,9 +79,15 @@ func InitialMigration() {
 const KeyForAuthentication = "secret"
 
 type RegisterRequest struct {
-	Name     string `json:"name"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
+	// Name     string `json:"name"`
+	// Email    string `json:"email"`
+	// Password string `json:"password"`
+	FirstName  string `json:"firstname"`
+	LastName   string `json:"lastname"`
+	Email      string `json:"email"`
+	Password   string `json:"password"`
+	Profession string `json:"profession"`
+	DOB        string `json:"DOB"`
 }
 
 func Register(c *fiber.Ctx) error {
@@ -91,21 +98,33 @@ func Register(c *fiber.Ctx) error {
 		return c.Status(400).JSON(err.Error())
 	}
 
-	fmt.Println(registerUser.Name + "" + registerUser.Email + "-> " + string(registerUser.Password))
+	fmt.Println(registerUser.FirstName + "" + registerUser.Email + "-> " + string(registerUser.Password))
 
-	var nameAlphaNumeric = true
-	for _, char := range registerUser.Name {
+	var firstNameAlphaNumeric = true
+	var lastNameAlphaNumeric = true
+	for _, char := range registerUser.FirstName {
 		// func IsLetter(r rune) bool, func IsNumber(r rune) bool
 		// if !unicode.IsLetter(char) && !unicode.IsNumber(char) {
 		if unicode.IsLetter(char) == false && unicode.IsNumber(char) == false {
-			nameAlphaNumeric = false
+			firstNameAlphaNumeric = false
+		}
+	}
+	for _, char := range registerUser.LastName {
+		// func IsLetter(r rune) bool, func IsNumber(r rune) bool
+		// if !unicode.IsLetter(char) && !unicode.IsNumber(char) {
+		if unicode.IsLetter(char) == false && unicode.IsNumber(char) == false {
+			lastNameAlphaNumeric = false
 		}
 	}
 
 	// check username pswdLength
-	var nameLength bool
-	if 5 <= len(registerUser.Name) && len(registerUser.Name) <= 50 {
-		nameLength = true
+	var firstNameLength bool
+	if 5 <= len(registerUser.FirstName) && len(registerUser.FirstName) <= 50 {
+		firstNameLength = true
+	}
+	var lastNameLength bool
+	if 5 <= len(registerUser.LastName) && len(registerUser.LastName) <= 50 {
+		lastNameLength = true
 	}
 	// variables that must pass for password creation criteria
 	var pswdLowercase, pswdUppercase, pswdNumber, pswdSpecial, pswdLength, pswdNoSpaces bool
@@ -133,24 +152,51 @@ func Register(c *fiber.Ctx) error {
 	if 11 < len(registerUser.Password) && len(registerUser.Password) < 60 {
 		pswdLength = true
 	}
-	fmt.Println("pswdLowercase:", pswdLowercase, "\npswdUppercase:", pswdUppercase, "\npswdNumber:", pswdNumber, "\npswdSpecial:", pswdSpecial, "\npswdLength:", pswdLength, "\npswdNoSpaces:", pswdNoSpaces, "\nnameAlphaNumeric:", nameAlphaNumeric, "\nnameLength:", nameLength)
-	if !pswdLowercase || !pswdUppercase || !pswdNumber || !pswdSpecial || !pswdLength || !pswdNoSpaces || !nameAlphaNumeric || !nameLength {
+	fmt.Println("pswdLowercase:", pswdLowercase, "\npswdUppercase:", pswdUppercase, "\npswdNumber:", pswdNumber, "\npswdSpecial:", pswdSpecial, "\npswdLength:", pswdLength, "\npswdNoSpaces:", pswdNoSpaces, "\nfirstNameAlphaNumeric:", firstNameAlphaNumeric, "\nlasttNameAlphaNumeric:", lastNameAlphaNumeric, "\nfirstNameLength:", firstNameLength, "\nlastNameLength:", lastNameLength)
+	if !pswdLowercase || !pswdUppercase || !pswdNumber || !pswdSpecial || !pswdLength || !pswdNoSpaces || !firstNameAlphaNumeric || !lastNameAlphaNumeric || !firstNameLength || !lastNameLength {
 
 		return c.Status(400).JSON(fiber.Map{
 			"message": "please check username and password criteria",
 		})
 	}
 
+	// dobDate, err := time.Parse("2006-01-02", registerUser.DOB)
+	// if err != nil {
+	// 	panic(err)
+	// }
+	s := strings.Split(registerUser.DOB, "-")
+	year, err := strconv.Atoi(s[0])
+	if err != nil {
+		panic(err)
+	}
+	month, err := strconv.Atoi(s[1])
+	if err != nil {
+		panic(err)
+	}
+	date, err := strconv.Atoi(s[2])
+	if err != nil {
+		panic(err)
+	}
+	// timeFormat := "2006-01-02"
+	dobDate := getDOB(year, month, date)
+
 	password, _ := bcrypt.GenerateFromPassword([]byte(registerUser.Password), bcrypt.DefaultCost)
 	user := new(models.User)
-	user.Name = registerUser.Name
+	user.FirstName = registerUser.FirstName
+	user.LastName = registerUser.LastName
 	user.Email = registerUser.Email
 	user.Password = password
+	user.Profession = registerUser.Profession
+	user.DOB = dobDate
 
 	DB.Create(&user)
 
 	return c.JSON(&user)
 
+}
+func getDOB(year, month, day int) time.Time {
+	dob := time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.UTC)
+	return dob
 }
 
 func Login(c *fiber.Ctx) error {
