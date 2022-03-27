@@ -11,6 +11,8 @@ import { EditFormService } from './edit-form.service';
 export class AdFormComponent implements OnInit {
   @Input() request;
   formData = new FormData();
+  lati: string;
+  longi: string;
   createForm: FormGroup = new FormGroup({
     title: new FormControl("", [Validators.required]),
     secondary_title: new FormControl("", [Validators.required]),
@@ -56,6 +58,18 @@ export class AdFormComponent implements OnInit {
     this.productsService.updateProduct(this.editFormService.getProductID(), {...this.createForm.value, price: +this.createForm.value.price, age: +this.createForm.value.age}).subscribe(res => {
       this.router.navigate(['/']);
     });
+  }
+
+  //Function for Geolocation
+  locateMe() {
+    navigator.geolocation.getCurrentPosition((position) => {
+      this.lati = position.coords.latitude.toString();
+      this.longi = position.coords.longitude.toString();
+      console.log('Geolocation test in progress:', this.lati, ' and ', this.longi)
+      this.createForm.controls['location_lat'].setValue(this.lati);
+      this.createForm.controls['location_long'].setValue(this.longi);
+    })
+    
   }
 
   onFileSelected(event, update) {
