@@ -19,7 +19,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {HttpClientModule } from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoaderComponent } from './loader/loader.component';
 import { AdFormComponent } from './ad-form/ad-form.component';
 import { DeletePopUpComponent } from './delete-pop-up/delete-pop-up.component';
@@ -27,6 +27,7 @@ import { CreateAddComponent } from './create-add/create-add.component';
 import { EditAddComponent } from './edit-add/edit-add.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { InterceptorService } from './interceptor.service';
 
 const materialImports = [
   MatCardModule,
@@ -65,7 +66,7 @@ const materialImports = [
   exports: [
     ...materialImports
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

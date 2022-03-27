@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ProductsService } from '../services/products.service';
 
 @Component({
   selector: 'app-login',
@@ -7,22 +9,28 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  token: string;
   loginForm: FormGroup = new FormGroup({
     email: new FormControl("", [Validators.email]),
     password: new FormControl("", [Validators.required])
   });
-  constructor() { }
+  constructor(private productsService: ProductsService, private router: Router) { }
 
   ngOnInit(): void {
+    // this.checkCookies();
   }
 
   checkCookies() {
-    // If there was a previous login use that
+    this.token = this.productsService.getCookie();
+    this.productsService.validateCookie({token: this.token}).subscribe(res => {
+
+    });
   }
   login() {
-    // Make an API call if login is success
-    // Save cookies
-    // redirect to products
+    this.productsService.signInUser(this.loginForm.value).subscribe((res: any) => {
+      this.productsService.setCookies(res.token);
+      this.router.navigate(['/products']);
+  });
   }
 
 }

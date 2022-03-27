@@ -63,7 +63,7 @@ func LoadEnv() {
 var DB *gorm.DB
 var err error
 
-const DNS = "root:Mysql@048@tcp(127.0.0.1:3306)/godbgator1?charset=utf8mb4&parseTime=True&loc=Local"
+const DNS = "root:root@tcp(127.0.0.1:3306)/godbgator1?charset=utf8mb4&parseTime=True&loc=Local"
 
 func InitialMigration() {
 	DB, err = gorm.Open(mysql.Open(DNS), &gorm.Config{})
@@ -149,7 +149,7 @@ func Register(c *fiber.Ctx) error {
 		}
 	}
 	fmt.Println(len(registerUser.Password))
-	if 11 < len(registerUser.Password) && len(registerUser.Password) < 60 {
+	if 8 < len(registerUser.Password) && len(registerUser.Password) < 60 {
 		pswdLength = true
 	}
 	fmt.Println("pswdLowercase:", pswdLowercase, "\npswdUppercase:", pswdUppercase, "\npswdNumber:", pswdNumber, "\npswdSpecial:", pswdSpecial, "\npswdLength:", pswdLength, "\npswdNoSpaces:", pswdNoSpaces, "\nfirstNameAlphaNumeric:", firstNameAlphaNumeric, "\nlasttNameAlphaNumeric:", lastNameAlphaNumeric, "\nfirstNameLength:", firstNameLength, "\nlastNameLength:", lastNameLength)
