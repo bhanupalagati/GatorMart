@@ -9,6 +9,8 @@ import { ProductsService } from '../services/products.service';
 })
 export class AdFormComponent implements OnInit {
   formData = new FormData();
+  lati: number;
+  longi: number;
   createForm: FormGroup = new FormGroup({
     title: new FormControl("", [Validators.required]),
     secondary_title: new FormControl("", [Validators.required]),
@@ -35,6 +37,16 @@ export class AdFormComponent implements OnInit {
     this.productsService.createNewProduct({...this.createForm.value, price: +this.createForm.value.price, age: +this.createForm.value.age}).subscribe(res => {
       this.router.navigate(['/']);
     });
+  }
+
+  locateme() {
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log('Geolocation test in progress')
+      this.lati = position.coords.latitude;
+      this.longi = position.coords.longitude;
+      console.log(this.lati, ' and ', this.longi)
+
+    })
   }
 
   onFileSelected(event, update) {
