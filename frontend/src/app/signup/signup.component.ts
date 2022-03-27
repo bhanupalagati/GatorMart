@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ProductsService } from '../services/products.service';
 
 @Component({
   selector: 'app-signup',
@@ -17,7 +19,7 @@ export class SignupComponent implements OnInit {
     lastname: new FormControl("", [Validators.required]),
     DOB: new FormControl("", [Validators.required]),
   });
-  constructor() { }
+  constructor(private productsService: ProductsService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -26,10 +28,9 @@ export class SignupComponent implements OnInit {
     // If there was a previous login use that
   }
   signup() {
-    // Make an API call if login is success
-    // Save cookies
-    // redirect to products
-    
+    this.productsService.signUpUser(this.signUpForm.value).subscribe(res => {
+        this.router.navigate(['/']);
+    });
   }
 
 }

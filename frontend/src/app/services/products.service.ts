@@ -7,6 +7,7 @@ import { Product, ProductResponse } from '../interfaces/product.interface';
 })
 export class ProductsService {
   baseUrl = "http://127.0.0.1:8000/";
+  userData: any;
   constructor(private http: HttpClient) { }
 
   getProductList() {
@@ -31,5 +32,39 @@ export class ProductsService {
 
   uploadImages(imageData) {
     return this.http.post(this.baseUrl + "product/upload", imageData)
+  }
+
+  signUpUser(userData) {
+    return this.http.post(this.baseUrl+'register', userData);
+  }
+
+  signInUser(userData) {
+    return this.http.post(this.baseUrl+'login', userData);
+  }
+
+  setCookies(token) {
+    let d = new Date();
+    d.setTime(d.getTime()+(24*60*60*1000));
+
+    let expires = "; expires="+d.toUTCString();
+    document.cookie = "token="+token+expires+"; path=/"
+  }
+
+  getCookie(name='token') {
+    let value = "; " + document.cookie;
+    let parts = value.split("; " + name + "=");
+    if (parts.length >= 2) return parts.pop().split(";").shift();
+  }
+
+  validateCookie(token) {
+    return this.http.post(this.baseUrl+'validate', token)
+  }
+
+  getUserData() {
+    return this.userData;
+  }
+
+  setUserData(userData) {
+    this.userData = JSON.parse(JSON.stringify(userData));
   }
 }
