@@ -33,6 +33,7 @@ func Routers(app *fiber.App) {
 		SigningKey: []byte("secret"),
 	}))
 	app.Get("/products", products.GetProducts)
+	app.Get("/categories", products.GetCatergories)
 	// app.Use(jwtware.New(jwtware.Config{
 	// 	SigningKey: []byte("secret"),
 	// }))
