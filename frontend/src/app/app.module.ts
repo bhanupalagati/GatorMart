@@ -28,6 +28,7 @@ import { EditAddComponent } from './edit-add/edit-add.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { InterceptorService } from './interceptor.service';
+import { FiltersComponent } from './filters/filters.component';
 
 const materialImports = [
   MatCardModule,
@@ -49,7 +50,8 @@ const materialImports = [
     CreateAddComponent,
     EditAddComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    FiltersComponent
   ],
   imports: [
     BrowserModule,

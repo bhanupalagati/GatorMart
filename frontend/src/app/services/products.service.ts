@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product, ProductResponse } from '../interfaces/product.interface';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,8 @@ import { Product, ProductResponse } from '../interfaces/product.interface';
 export class ProductsService {
   baseUrl = "http://127.0.0.1:8000/";
   userData: any;
+  filtersApplied = false;
+  applyFilters = new BehaviorSubject({});
   constructor(private http: HttpClient) { }
 
   getProductList() {
