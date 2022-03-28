@@ -63,7 +63,7 @@ func LoadEnv() {
 var DB *gorm.DB
 var err error
 
-const DNS = "root:root@tcp(127.0.0.1:3306)/godbgator1?charset=utf8mb4&parseTime=True&loc=Local"
+const DNS = "root:Mysql@048@tcp(127.0.0.1:3306)/godbgator1?charset=utf8mb4&parseTime=True&loc=Local"
 
 func InitialMigration() {
 	DB, err = gorm.Open(mysql.Open(DNS), &gorm.Config{})
@@ -274,6 +274,14 @@ func Logout(c *fiber.Ctx) error {
 
 		"cookie": cookie,
 	})
+}
+
+func UserDetails(c *fiber.Ctx) error {
+	user, authorized := UserAuthorized(c)
+	if !authorized {
+		return c.Status(401).JSON("User not authorized")
+	}
+	return c.JSON(user)
 }
 
 func UserAuthorized(c *fiber.Ctx) (models.User, bool) {
