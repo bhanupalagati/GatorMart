@@ -323,9 +323,33 @@ func SaveProduct(c *fiber.Ctx) error {
 	if err := c.BodyParser(product); err != nil {
 		return c.Status(400).JSON(err.Error())
 	}
+	categoryTyp := CategoryType(product.Category)
+	switch categoryTyp {
+	case Automobile, Mobile, ElectronicsAppliances, Furniture, Books, Sports, Pets:
+
+	}
+
+	if err := IsValid(categoryTyp); err != nil {
+		return c.Status(400).JSON("Invalid Category")
+	}
+
 	DB.Create(&product)
 	return c.JSON(&product)
 }
+func GetCatergories(c *fiber.Ctx) error {
+	a := [...]string{"Automobile", "Mobile", "ElectronicsAppliances", "Furniture", "Books", "Sports", "Pets"}
+	fmt.Println("a is ", a)
+	return c.JSON(a)
+}
+
+func IsValid(lt CategoryType) error {
+	switch lt {
+	case Automobile, Mobile, ElectronicsAppliances, Furniture, Books, Sports, Pets:
+		return nil
+	}
+	return errors.New("Invalid Category type")
+}
+
 func GetProducts(c *fiber.Ctx) error {
 	_, authorized := UserAuthorized(c)
 	if !authorized {
@@ -370,6 +394,18 @@ func UpdateProduct(c *fiber.Ctx) error {
 	if err := c.BodyParser(product); err != nil {
 		return c.Status(400).JSON(err.Error())
 	}
+	if product.Category != "" {
+		categoryTyp := CategoryType(product.Category)
+		switch categoryTyp {
+		case Automobile, Mobile, ElectronicsAppliances, Furniture, Books, Sports, Pets:
+
+		}
+
+		if err := IsValid(categoryTyp); err != nil {
+			return c.Status(400).JSON("Invalid Category")
+		}
+	}
+
 	DB.Save(&product)
 	return c.JSON(&product)
 
@@ -534,3 +570,15 @@ func FilterProducts(c *fiber.Ctx) error {
 	return c.JSON(&products)
 
 }
+
+type CategoryType string
+
+const (
+	Automobile            CategoryType = "Automobile"
+	Mobile                             = "Mobile"
+	ElectronicsAppliances              = "ElectronicsAppliances"
+	Furniture                          = "Furniture"
+	Books                              = "Books"
+	Sports                             = "Sports"
+	Pets                               = "Pets"
+)
