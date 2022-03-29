@@ -243,18 +243,18 @@ func Login(c *fiber.Ctx) error {
 		})
 	}
 
-	cookie := fiber.Cookie{
-		Name:     "cookie",
-		Value:    token,
-		Expires:  time.Now().Add(time.Hour * 24),
-		HTTPOnly: true,
-	}
+	// cookie := fiber.Cookie{
+	// 	Name:     "cookie",
+	// 	Value:    token,
+	// 	Expires:  time.Now().Add(time.Hour * 24),
+	// 	HTTPOnly: true,
+	// }
 
-	c.Cookie(&cookie)
+	// c.Cookie(&cookie)
 	return c.JSON(fiber.Map{
 		"message": "login success",
 		"token":   token,
-		"cookie":  cookie,
+		//"cookie":  cookie,
 	})
 
 }
@@ -351,10 +351,10 @@ func IsValid(lt CategoryType) error {
 }
 
 func GetProducts(c *fiber.Ctx) error {
-	_, authorized := UserAuthorized(c)
-	if !authorized {
-		return c.Status(401).JSON("User not authorized")
-	}
+	// _, authorized := UserAuthorized(c)
+	// if !authorized {
+	// 	return c.Status(401).JSON("User not authorized")
+	// }
 	var products []models.Product
 	DB.Find(&products)
 	return c.JSON(&products)
