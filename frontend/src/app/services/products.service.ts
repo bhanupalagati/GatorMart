@@ -11,6 +11,7 @@ export class ProductsService {
   userData: any;
   filtersApplied = false;
   applyFilters = new BehaviorSubject({});
+  dropDowns = {};
   constructor(private http: HttpClient) { }
 
   getProductList() {
@@ -43,6 +44,14 @@ export class ProductsService {
 
   signInUser(userData) {
     return this.http.post(this.baseUrl+'login', userData);
+  }
+
+  getFilteredProducts(filterData) {
+    return this.http.post<Product[]>(this.baseUrl+'filterproducts', filterData);
+  }
+
+  getDropdown(name) {
+    return this.http.get<string[]>(this.baseUrl+name);
   }
 
   setCookies(token) {

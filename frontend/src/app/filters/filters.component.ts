@@ -24,7 +24,8 @@ export class FiltersComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.productsService.filtersApplied) {
-      this.filterForm.setValue(this.productsService.applyFilters.value);
+      const filterData = this.productsService.applyFilters.value
+      this.filterForm.setValue({...filterData, price: filterData['price']['price'] || filterData['price'], age: filterData['age']['age'] || filterData['age']});
     }
   }
 
@@ -35,7 +36,9 @@ export class FiltersComponent implements OnInit {
 
   clearFilters() {
     this.productsService.filtersApplied = false;
-    this.productsService.applyFilters.next({});
+    const clearedFilters = {title: "", condition: "", target: "", age: "", sortBy: "", price: "", radius: "", category: ""}
+    this.productsService.applyFilters.next({...clearedFilters});
+    this.filterForm.setValue({...clearedFilters});
   }
 
 }
