@@ -13,7 +13,7 @@ export class InterceptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.token = this.productsService.getCookie();
     if (this.token) {
-      const tokenizedReq = req.clone({ headers: req.headers.set('Authorization', this.token) });
+      const tokenizedReq = req.clone({ headers: req.headers.set('Authorization', 'Bearer '+this.token) });
       return next.handle(tokenizedReq);
     }
     return next.handle(req);

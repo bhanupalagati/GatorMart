@@ -16,6 +16,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
   constructor(private productsService: ProductsService) { }
 
   ngOnInit(): void {
+    this.productsService.getProductList().subscribe(res => {
+      this.productResp = res;
+      this.loading = false;
+    });
     this.subscription = this.productsService.applyFilters.subscribe(filterData => {
       const filters = this.processFilterInfo(filterData);
       // Change this to fetch by filter route
