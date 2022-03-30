@@ -18,7 +18,9 @@ func Login(c *fiber.Ctx) error {
 }
 
 func Routers(app *fiber.App) {
-
+	app.Use(jwtware.New(jwtware.Config{
+		SigningKey: []byte("secret"),
+	}))
 	// app.Get("/products", products.GetProducts)
 	app.Post("/product", products.SaveProduct)
 	app.Get("/product/:id", products.GetProduct)
@@ -29,9 +31,9 @@ func Routers(app *fiber.App) {
 	app.Post("/login", products.Login)
 	app.Post("/logout", products.Logout)
 	app.Post("/filterproducts", products.FilterProducts)
-	app.Use(jwtware.New(jwtware.Config{
-		SigningKey: []byte("secret"),
-	}))
+	// app.Use(jwtware.New(jwtware.Config{
+	// 	SigningKey: []byte("secret"),
+	// }))
 	app.Get("/products", products.GetProducts)
 	app.Get("/categories", products.GetCatergories)
 	// app.Use(jwtware.New(jwtware.Config{
