@@ -16,35 +16,43 @@ export class ProductListComponent implements OnInit, OnDestroy {
   constructor(private productsService: ProductsService) { }
 
   ngOnInit(): void {
-    this.productsService.getProductList().subscribe(res => {
-      this.productResp = res;
-      this.loading = false;
-    });
+    this.apiCall(this.productsService.applyFilters.value);
+    this.filterSubscription();
+  }
+
+  filterSubscription() {
     this.subscription = this.productsService.applyFilters.subscribe(filterData => {
       const filters = this.processFilterInfo(filterData);
-      // Change this to fetch by filter route
-      this.productsService.getProductList().subscribe(res => {
-        this.productResp = res;
-        this.loading = false;
-      });
+      this.apiCall(filters)
+    });
+  }
+
+  apiCall(filters) {
+    this.productsService.getFilteredProducts(filters).subscribe(res => {
+      this.productResp = res;
+      this.loading = false;
     });
   }
 
   processFilterInfo(filterData) {
-    const prices = filterData['price'].split(" ");
-    const age = filterData['age'].split(" ");
+    const prices = filterData['price'] ? filterData['price'].split(" ") : [];
+    const age = filterData['age'] ? filterData['age'].split(" ") : [];
+    filterData['price'] = {};
+    filterData['age'] = {};
     if (prices.length > 2) {
       filterData['price'] = {
         operator: prices[0],
         value1: +prices[1],
-        value2: +prices[2]
+        value2: +prices[2],
+        price: filterData.price
       }
     }
     if (age.length > 2) {
       filterData['age'] = {
         operator: age[0],
         value1: +age[1],
-        value2: +age[2]
+        value2: +age[2],
+        age: filterData.age
       }
     }
   
