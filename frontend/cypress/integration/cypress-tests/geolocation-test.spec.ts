@@ -26,7 +26,8 @@ describe('Geolocation pull request test', function () {
         cy.get('button').eq(0).click()
         cy.wait(5000)  
         //cy.get('input').eq(10).contains('29.62056457889113')
-        //cy.get('input').eq(11).contains('-82.37617368280584'  x)
+        //cy.get('input').eq(11).contains('-82.37617368280584')
+        //Need to add a error mechanism here in future for failed pull request
         cy.get('input').eq(12).clear().type('Used')
         cy.get('input').eq(13).clear().type('1')
         cy.get('input').eq(15).type('Scientists')

@@ -1,0 +1,1 @@
+//Objective: Test the registration functionality

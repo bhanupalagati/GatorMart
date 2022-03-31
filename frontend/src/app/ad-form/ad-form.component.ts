@@ -60,7 +60,6 @@ export class AdFormComponent implements OnInit {
     });
   }
 
-  //Function for Geolocation
   locateMe() {
     navigator.geolocation.getCurrentPosition((position) => {
       this.lati = position.coords.latitude.toString();
@@ -68,8 +67,40 @@ export class AdFormComponent implements OnInit {
       console.log('Geolocation test in progress:', this.lati, ' and ', this.longi)
       this.createForm.controls['location_lat'].setValue(this.lati);
       this.createForm.controls['location_long'].setValue(this.longi);
-    })
-    
+      this.getlocation(this.lati, this.longi).then((value) => {
+
+        var city = value['address_components'][2]['long_name'];
+        var state = value['address_components'][4]['long_name'];
+        this.createForm.controls['city'].setValue(city);
+        this.createForm.controls['state'].setValue(state);
+
+      }).catch(console.error);
+      
+    }) 
+  }
+
+  getlocation(latitude, longitude) {
+    return new Promise(function (resolve, reject) {
+      var request = new XMLHttpRequest();
+      var method = 'GET';
+      var url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&key=AIzaSyCqfZ7j-LFLvvpELe_N9lkspeTUod_sP9k';
+      var async = true;
+
+      request.open(method, url, async);
+      request.onreadystatechange = function () {localStorage
+          if (request.readyState == 4) {
+              if (request.status == 200) {
+                  var data = JSON.parse(request.responseText);
+                  var address = data.results[0];
+                  resolve(address);
+              }
+              else {
+                  reject(request.status);
+              }
+          }
+      };
+      request.send();
+   });
   }
 
   onFileSelected(event, update) {
