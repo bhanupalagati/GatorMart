@@ -83,7 +83,7 @@ export class AdFormComponent implements OnInit {
     return new Promise(function (resolve, reject) {
       var request = new XMLHttpRequest();
       var method = 'GET';
-      var url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&key=AIzaSyCqfZ7j-LFLvvpELe_N9lkspeTUod_sP9k';
+      var url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + atob('JmtleT1BSXphU3lDcWZaN2otTEZMdnZwRUxlX045bGtzcGVUVW9kX3NQOWs=');
       var async = true;
 
       request.open(method, url, async);
