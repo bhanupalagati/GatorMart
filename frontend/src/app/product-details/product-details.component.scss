@@ -82,7 +82,14 @@
     width: auto;
 }
 
-
+//MapCode - Start
+.my-google-map{
+  .map-container{
+    width: 500px;
+    height: 100px;
+  }
+}
+//MapCode - End
 
 ::ng-deep .carousel-item {
     background-color: black !important;
