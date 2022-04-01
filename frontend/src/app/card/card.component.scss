@@ -3,12 +3,9 @@
     margin: 20px;
     &__image {
         &__content {
-            object-position: center;
-            max-width:250px;
-            max-height:250px;
-            height: auto;
-            
-            width: auto;
+            margin: auto;
+            width:200px;
+            height:200px;
         }
     }
     &__info {
@@ -23,6 +20,11 @@
             color: grey;
             display: inline;
             font-size: 20px;
+        }
+        &__desc {
+            height: 80px;
+            overflow: hidden;
+            text-overflow: ellipse;
         }
     }
 }
