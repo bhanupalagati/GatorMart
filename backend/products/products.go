@@ -182,6 +182,7 @@ func Register(c *fiber.Ctx) error {
 
 	password, _ := bcrypt.GenerateFromPassword([]byte(registerUser.Password), bcrypt.DefaultCost)
 	user := new(models.User)
+	// user.UserID = int(user.ID)
 	user.FirstName = registerUser.FirstName
 	user.LastName = registerUser.LastName
 	user.Email = registerUser.Email
@@ -229,10 +230,23 @@ func Login(c *fiber.Ctx) error {
 			"message": "incorrect password",
 		})
 	}
+	println(dbUser.ID)
 
-	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.StandardClaims{
-		Issuer: strconv.Itoa(int(dbUser.ID)),
-	})
+	tokenExpirationTime := time.Now().Add(24 * time.Hour)
+	claim := jwt.MapClaims{}
+	claim["authorized"] = true
+	claim["username"] = dbUser.FirstName
+	claim["useremail"] = dbUser.Email
+	claim["userid"] = dbUser.ID
+	claim["ExpiresAt"] = tokenExpirationTime.Unix()
+	claim["IssuedAt"] = time.Now().Unix()
+	claim["Issuer"] = "GatorMart"
+	claim["Subject"] = "Token for GatorMart frontend"
+	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, claim)
+
+	// claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.StandardClaims{
+	// 	Issuer: strconv.Itoa(int(dbUser.ID)),
+	// })
 
 	token, err := claims.SignedString([]byte(KeyForAuthentication))
 
@@ -319,6 +333,34 @@ func SaveProduct(c *fiber.Ctx) error {
 	// if !authorized {
 	// 	return c.Status(401).JSON("User not authorized")
 	// }
+	bearerToken := c.Get("authorization")
+	println(bearerToken)
+	tokenString := strings.Split(bearerToken, " ")[1]
+	// token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+	// 	return KeyForAuthentication, nil
+	// })
+	// if err != nil{
+	// 	return c.Status(400).JSON("Unable to parse token")
+	// }
+	// token, err := jwt.ParseWithClaims(tokenString, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
+	// 	return []byte(KeyForAuthentication), nil
+
+	// })
+	claims := jwt.MapClaims{}
+	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
+		return []byte(KeyForAuthentication), nil
+	})
+
+	if err != nil {
+		c.Status(fiber.StatusUnauthorized)
+		return c.JSON(fiber.Map{
+			"message": "User unauthenticated",
+		})
+		println(token)
+	}
+
+	//claims := token.Claims.(*jwt.StandardClaims)
+
 	product := new(models.Product)
 	if err := c.BodyParser(product); err != nil {
 		return c.Status(400).JSON(err.Error())
@@ -333,6 +375,13 @@ func SaveProduct(c *fiber.Ctx) error {
 		return c.Status(400).JSON("Invalid Category")
 	}
 
+	for key, val := range claims {
+		fmt.Printf("Key: %v, value: %v\n", key, val)
+	}
+	//product.PostedBy = claims["userid"].(string)
+	p := uint(claims["userid"].(float64))
+	println(p)
+	product.PostedBy = p
 	DB.Create(&product)
 	return c.JSON(&product)
 }

@@ -18,7 +18,7 @@ type Product struct {
 	Location_Long     string `json:"location_long"`
 	Target            string `json:"target"`
 	Category          string `json:"category"`
-	PostedBy          string `json:"posted_by"`
+	PostedBy          uint   `json:"posted_by"`
 	PostedDate        string `json:"posted_date"`
 	Condition         string `json:"condition"`
 	Age               int    `json:"age"`
