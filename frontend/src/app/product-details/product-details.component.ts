@@ -6,6 +6,7 @@ import { DeletePopUpComponent } from '../delete-pop-up/delete-pop-up.component';
 import { Product } from '../interfaces/product.interface';
 import { product } from '../mocks/products.mock';
 import { ProductsService } from '../services/products.service';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @Component({
   selector: 'app-product-details',
@@ -44,4 +45,12 @@ export class ProductDetailsComponent implements OnInit {
   openDelete() {
     this.dialog.open(DeletePopUpComponent, { data: this.product });
   }
+
+  //MapCode - Start
+  mapOptions: google.maps.MapOptions = {
+    center: { lat: Number(product.location_lat), lng: Number(product.location_long) },
+    zoom: 14
+  };
+  marker = { position: { lat: Number(product.location_lat), lng: Number(product.location_long) } };
+  //MapCode - End
 }

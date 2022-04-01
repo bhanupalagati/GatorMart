@@ -28,7 +28,9 @@ import { EditAddComponent } from './edit-add/edit-add.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { InterceptorService } from './interceptor.service';
+import { GoogleMapsModule } from '@angular/google-maps';
 import { FiltersComponent } from './filters/filters.component';
+
 
 const materialImports = [
   MatCardModule,
@@ -58,6 +60,7 @@ const materialImports = [
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    GoogleMapsModule,
     ...materialImports,
     NgbModule,
     NgbPaginationModule,
