@@ -232,7 +232,7 @@ func TestLoginWhenPassWordInCorrect(t *testing.T) {
 
 	app := fiber.New()
 
-	req, _ := http.NewRequest("POST", "/api/login", bytes.NewBuffer(data))
+	req, _ := http.NewRequest("POST", "/login", bytes.NewBuffer(data))
 
 	response, err := app.Test(req)
 
@@ -246,17 +246,17 @@ func TestLoginWhenPassWordInCorrect(t *testing.T) {
 func TestLoginWhenPassWordCorrect(t *testing.T) {
 	var data = []byte(`{
 		"email": "gatormart1@ufl.edu",
-		"password": "gatormart"
+		"password": "gatormart1@A1"
 	}`)
 
 	app := fiber.New()
 
-	req, _ := http.NewRequest("POST", "/api/login", bytes.NewBuffer(data))
+	req, _ := http.NewRequest(http.MethodPost, "/login", bytes.NewBuffer(data))
 
 	response, err := app.Test(req)
 
 	if err != nil {
-		t.Errorf("Handler Returned a wrong status code")
+		t.Errorf("400")
 	}
 
 	assert.Equal(t, fiber.StatusOK, response.StatusCode)
@@ -264,18 +264,18 @@ func TestLoginWhenPassWordCorrect(t *testing.T) {
 
 func TestRegisterWhenSuccess(t *testing.T) {
 	var data = []byte(`{
-		"FirstName" : "Gowtham"
-		"LastName": "Eda",
-		"Email": "gatormart1@ufl.edu",
-		"Password": "gatormart1@A1",
-		"Profession": "Student",
-		"DOB": "07211997"
+		"firstname" : "Gowtham"
+		"lastname": "Edaaaa",
+		"email": "gatormart1@ufl.edu",
+		"password": "gatormart1@A1",
+		"profession": "Student",
+		"DOB": "1997-01-01"
 
 	}`)
 
 	app := fiber.New()
 
-	req, _ := http.NewRequest("POST", "/api/register", bytes.NewBuffer(data))
+	req, _ := http.NewRequest("POST", "/register", bytes.NewBuffer(data))
 
 	response, err := app.Test(req)
 
@@ -407,5 +407,5 @@ func TestGetProductsWhenFailure(t *testing.T) {
 		t.Errorf("Handler Returned a fail status code")
 	}
 
-	assert.Equal(t, fiber.StatusOK, response.StatusCode)
+	assert.Equal(t, fiber.StatusNotFound, response.StatusCode)
 }
