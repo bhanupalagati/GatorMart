@@ -1,8 +1,10 @@
 /// <reference types ="cypress" />
 
+import { Agent } from "http"
+
 // Objective: Test validation features of the login page
 
-describe('Login psge functionality', function () {
+describe('Login into the application', function () {
     it('Sign up functionality', function() {
         cy.visit('http://localhost:4200/signup')
         
