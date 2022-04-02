@@ -28,26 +28,12 @@ describe('Login into the app', function () {
             cy.scrollTo('top') 
         
     })
-    it('Edit Button', function() {
-        cy.get('button').eq(0).click()       
-    })
-    
-    it('Enter the edited details', function() {
-        //Price
-         cy.get('input')
-         .eq(5)
-         .clear()
-         .type('25500')
-        //Simple Description
-        cy.get('input')
-         .eq(6)
-         .clear()
-         .type('Edited ad description')        
-    })
-
-    
-    it('Submit the form', function() {
+    it('Delete Product Button', function() {
         cy.get('button').eq(1).click()       
+    })
+    
+    it('Verify Delete function', function() {
+        cy.get('button').eq(14).click() 
     })
 
 
