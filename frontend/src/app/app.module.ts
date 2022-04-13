@@ -14,7 +14,9 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
-
+import {MatMenuModule} from '@angular/material/menu';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 // Other Imports
 import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -30,6 +32,7 @@ import { SignupComponent } from './signup/signup.component';
 import { InterceptorService } from './interceptor.service';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { FiltersComponent } from './filters/filters.component';
+import { HeaderComponent } from './header/header.component';
 
 
 const materialImports = [
@@ -38,7 +41,10 @@ const materialImports = [
   MatIconModule,
   MatFormFieldModule,
   MatInputModule,
-  MatDialogModule
+  MatDialogModule,
+  MatMenuModule,
+  MatChipsModule,
+  MatSlideToggleModule
 ]
 @NgModule({
   declarations: [
@@ -53,7 +59,8 @@ const materialImports = [
     EditAddComponent,
     LoginComponent,
     SignupComponent,
-    FiltersComponent
+    FiltersComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

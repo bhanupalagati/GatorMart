@@ -1,0 +1,28 @@
+<div class="header_container">
+    <div class="group1">
+        GatorMart
+    </div>
+    <div class="group2">
+        <mat-slide-toggle>Filters</mat-slide-toggle>
+        <button mat-button [matMenuTriggerFor]="menu"><mat-icon>person</mat-icon></button>
+    </div>
+</div>
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item>
+        <mat-icon color="accent">face</mat-icon>
+        <span>UserName</span>
+    </button>
+    <button mat-menu-item>
+        <mat-icon color="accent">whatshot</mat-icon>
+        <span>My Ads</span>
+    </button>
+    <button mat-menu-item>
+        <mat-icon color="accent">create</mat-icon>
+        <span>Create Ad</span>
+    </button>
+    <button mat-menu-item>
+        <mat-icon color="accent">exit_to_app</mat-icon>
+        <span>LogOut</span>
+    </button>
+  </mat-menu>
