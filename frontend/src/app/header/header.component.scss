@@ -1,0 +1,19 @@
+.header_container {
+    width: 100%;
+    background-color: #00529b;
+    color: white;
+    display: flex;
+    height: 50px;
+    .group1 {
+        flex-grow: 1;
+        padding-left: 30px;
+        font-size: 32px;
+        font-weight: bolder;
+        align-items: center;
+        margin-top: 10px;
+    }
+    .group2 {
+        margin-top: 10px;
+        padding-right: 30px;
+    }
+}

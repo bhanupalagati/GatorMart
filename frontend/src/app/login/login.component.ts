@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
   }
   login() {
     this.productsService.signInUser(this.loginForm.value).subscribe((res: any) => {
+      this.productsService.setUserData(res);
       this.productsService.setCookies(res.token);
       this.router.navigate(['/products']);
   });
