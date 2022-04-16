@@ -684,6 +684,8 @@ type CategoryType string
 
 type TargetType string
 
+type ConditionType string
+
 const (
 	Automobile            CategoryType = "Automobile"
 	Mobile                             = "Mobile"
@@ -700,4 +702,11 @@ const (
 	Businessmen            = "Businessmen"
 	Engineer               = "Engineer"
 	Other                  = "Other"
+)
+
+const (
+	Used    ConditionType = "Used"
+	LikeNew               = "LikeNew"
+	OpenBox               = "OpenBox"
+	New                   = "New"
 )
