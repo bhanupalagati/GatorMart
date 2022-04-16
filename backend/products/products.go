@@ -6,6 +6,7 @@ import (
 	"log"
 	"main/models"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -626,7 +627,13 @@ func FilterProducts(c *fiber.Ctx) error {
 		}
 
 	}
-
+	if filterConditions.SortBy != "" {
+		if filterConditions.SortBy == "price" {
+			sort.SliceStable(products, func(i, j int) bool {
+				return products[i].Price < products[j].Price
+			})
+		}
+	}
 	log.Println(fmt.Sprintf("Number of results obtained %d", len(products)))
 	return c.JSON(&products)
 
