@@ -388,6 +388,16 @@ func SaveProduct(c *fiber.Ctx) error {
 		return c.Status(400).JSON("Invalid Category")
 	}
 
+	targetTyp := TargetType(product.Target)
+	switch targetTyp {
+	case Student, Farmer, Businessmen, Engineer, Other:
+
+	}
+
+	if err := IsValidTarget(targetTyp); err != nil {
+		return c.Status(400).JSON("Invalid Target")
+	}
+
 	for key, val := range claims {
 		fmt.Printf("Key: %v, value: %v\n", key, val)
 	}
@@ -416,6 +426,14 @@ func IsValid(lt CategoryType) error {
 		return nil
 	}
 	return errors.New("Invalid Category type")
+}
+
+func IsValidTarget(lt TargetType) error {
+	switch lt {
+	case Student, Farmer, Businessmen, Engineer, Other:
+		return nil
+	}
+	return errors.New("Invalid Target type")
 }
 
 func GetProducts(c *fiber.Ctx) error {
@@ -471,6 +489,17 @@ func UpdateProduct(c *fiber.Ctx) error {
 
 		if err := IsValid(categoryTyp); err != nil {
 			return c.Status(400).JSON("Invalid Category")
+		}
+	}
+	if product.Target != "" {
+		targetTyp := TargetType(product.Target)
+		switch targetTyp {
+		case Student, Farmer, Businessmen, Engineer, Other:
+
+		}
+
+		if err := IsValidTarget(targetTyp); err != nil {
+			return c.Status(400).JSON("Invalid Target")
 		}
 	}
 
@@ -647,6 +676,8 @@ func FilterProducts(c *fiber.Ctx) error {
 
 type CategoryType string
 
+type TargetType string
+
 const (
 	Automobile            CategoryType = "Automobile"
 	Mobile                             = "Mobile"
@@ -655,4 +686,12 @@ const (
 	Books                              = "Books"
 	Sports                             = "Sports"
 	Pets                               = "Pets"
+)
+
+const (
+	Student     TargetType = "Student"
+	Farmer                 = "Farmer"
+	Businessmen            = "Businessmen"
+	Engineer               = "Engineer"
+	Other                  = "Other"
 )
