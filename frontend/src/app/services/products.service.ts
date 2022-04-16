@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product, ProductResponse } from '../interfaces/product.interface';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +51,7 @@ export class ProductsService {
   }
 
   getDropdown(name) {
+    return of(['option1', 'option2', 'option3', 'option4']);
     return this.http.get<string[]>(this.baseUrl+name);
   }
 

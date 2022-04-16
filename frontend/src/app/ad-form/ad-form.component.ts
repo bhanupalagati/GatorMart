@@ -9,6 +9,7 @@ import { EditFormService } from './edit-form.service';
   styleUrls: ['./ad-form.component.scss']
 })
 export class AdFormComponent implements OnInit {
+  options: string[];
   @Input() request;
   formData = new FormData();
   lati: string;
@@ -33,9 +34,14 @@ export class AdFormComponent implements OnInit {
   constructor(private productsService: ProductsService, private router: Router, private editFormService: EditFormService) { }
 
   ngOnInit(): void {
+    this.getDropDownValues();
     if (this.request === 'edit') {
       this.populateEditForm();
     }
+  }
+
+  getDropDownValues() {
+    this.productsService.getDropdown('categories').subscribe(res => this.options = res);
   }
 
   populateEditForm() {    
