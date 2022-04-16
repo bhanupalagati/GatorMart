@@ -398,6 +398,16 @@ func SaveProduct(c *fiber.Ctx) error {
 		return c.Status(400).JSON("Invalid Target")
 	}
 
+	conditionTyp := ConditionType(product.Target)
+	switch conditionTyp {
+	case Used, LikeNew, OpenBox, New:
+
+	}
+
+	if err := IsValidCondition(conditionTyp); err != nil {
+		return c.Status(400).JSON("Invalid Condition")
+	}
+
 	for key, val := range claims {
 		fmt.Printf("Key: %v, value: %v\n", key, val)
 	}
@@ -440,6 +450,14 @@ func IsValidTarget(lt TargetType) error {
 		return nil
 	}
 	return errors.New("Invalid Target type")
+}
+
+func IsValidCondition(lt ConditionType) error {
+	switch lt {
+	case Used, LikeNew, OpenBox, New:
+		return nil
+	}
+	return errors.New("Invalid Condition type")
 }
 
 func GetProducts(c *fiber.Ctx) error {
@@ -506,6 +524,18 @@ func UpdateProduct(c *fiber.Ctx) error {
 
 		if err := IsValidTarget(targetTyp); err != nil {
 			return c.Status(400).JSON("Invalid Target")
+		}
+	}
+
+	if product.Condition != "" {
+		conditionTyp := ConditionType(product.Target)
+		switch conditionTyp {
+		case Used, LikeNew, OpenBox, New:
+
+		}
+
+		if err := IsValidCondition(conditionTyp); err != nil {
+			return c.Status(400).JSON("Invalid Condition")
 		}
 	}
 
