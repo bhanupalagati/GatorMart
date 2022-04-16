@@ -420,6 +420,12 @@ func GetTarget(c *fiber.Ctx) error {
 	return c.JSON(a)
 }
 
+func GetCondition(c *fiber.Ctx) error {
+	a := [...]string{"Used", "LikeNew", "OpenBox", "New"}
+	fmt.Println("a is ", a)
+	return c.JSON(a)
+}
+
 func IsValid(lt CategoryType) error {
 	switch lt {
 	case Automobile, Mobile, ElectronicsAppliances, Furniture, Books, Sports, Pets:
