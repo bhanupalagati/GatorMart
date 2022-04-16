@@ -17,6 +17,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatSelectModule} from '@angular/material/select';
 // Other Imports
 import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -44,7 +45,8 @@ const materialImports = [
   MatDialogModule,
   MatMenuModule,
   MatChipsModule,
-  MatSlideToggleModule
+  MatSlideToggleModule,
+  MatSelectModule
 ]
 @NgModule({
   declarations: [

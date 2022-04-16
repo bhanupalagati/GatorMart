@@ -10,13 +10,21 @@
         <div class="filter-form__item">
             <mat-form-field appearance="outline" class="ad_form_container__flex__input">
                 <mat-label>Condition</mat-label>
-                <input matInput formControlName="condition">
+                <mat-select formControlName="condition">
+                    <mat-option *ngFor="let option of options" [value]="option">
+                      {{option}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
         </div>
         <div class="filter-form__item">
             <mat-form-field appearance="outline" class="ad_form_container__flex__input">
                 <mat-label>Target</mat-label>
-                <input matInput formControlName="target">
+                <mat-select formControlName="target">
+                    <mat-option *ngFor="let option of options" [value]="option">
+                      {{option}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
         </div>
         <div class="filter-form__item">
@@ -28,7 +36,11 @@
         <div class="filter-form__item">
             <mat-form-field appearance="outline" class="ad_form_container__flex__input">
                 <mat-label>SortBy</mat-label>
-                <input matInput formControlName="sortBy">
+                <mat-select formControlName="sortBy">
+                    <mat-option *ngFor="let option of options" [value]="option">
+                      {{option}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
         </div>
         <div class="filter-form__item">
@@ -46,7 +58,11 @@
         <div class="filter-form__item">
             <mat-form-field appearance="outline" class="ad_form_container__flex__input">
                 <mat-label>Category</mat-label>
-                <input matInput formControlName="category">
+                <mat-select formControlName="category">
+                    <mat-option *ngFor="let option of options" [value]="option">
+                      {{option}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
         </div>
     </div>

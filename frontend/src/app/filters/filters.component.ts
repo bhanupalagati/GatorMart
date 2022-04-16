@@ -9,7 +9,7 @@ import { ProductsService } from '../services/products.service';
   styleUrls: ['./filters.component.scss']
 })
 export class FiltersComponent implements OnInit {
-
+  options: string[];
   filterForm: FormGroup = new FormGroup({
     title: new FormControl(""),
     condition: new FormControl(""),
@@ -23,10 +23,15 @@ export class FiltersComponent implements OnInit {
   constructor(private productsService: ProductsService, private router: Router) { }
 
   ngOnInit(): void {
+    this.getDropDownValues();
     if(this.productsService.filtersApplied) {
       const filterData = this.productsService.applyFilters.value
       this.filterForm.setValue({...filterData, price: filterData['price']['price'] || filterData['price'], age: filterData['age']['age'] || filterData['age']});
     }
+  }
+
+  getDropDownValues() {
+    this.productsService.getDropdown('categories').subscribe(res => this.options = res);
   }
 
   applyFilters() {

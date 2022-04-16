@@ -59,12 +59,20 @@
         </mat-form-field>
         <mat-form-field appearance="outline" class="ad_form_container__flex__input">
             <mat-label>State</mat-label>
-            <input matInput placeholder="FL" formControlName="state">
+            <mat-select formControlName="state">
+                <mat-option *ngFor="let option of options" [value]="option">
+                  {{option}}
+                </mat-option>
+            </mat-select>
             <mat-hint>Use only short hand notations Florida => FL</mat-hint>
         </mat-form-field>
         <mat-form-field appearance="outline" class="ad_form_container__flex__input">
             <mat-label>Condition</mat-label>
-            <input matInput placeholder="New" formControlName="condition">
+            <mat-select formControlName="condition">
+                <mat-option *ngFor="let option of options" [value]="option">
+                  {{option}}
+                </mat-option>
+            </mat-select>
             <mat-hint>Please provide </mat-hint>
         </mat-form-field>
         <mat-form-field appearance="outline" class="ad_form_container__flex__input">
@@ -79,12 +87,20 @@
         </mat-form-field>
         <mat-form-field appearance="outline" class="ad_form_container__flex__input">
             <mat-label>Target</mat-label>
-            <input matInput placeholder="Student" formControlName="target">
+            <mat-select formControlName="target">
+                <mat-option *ngFor="let option of options" [value]="option">
+                  {{option}}
+                </mat-option>
+            </mat-select>
             <mat-hint>Whom do you want to target</mat-hint>
         </mat-form-field>
         <mat-form-field appearance="outline" class="ad_form_container__flex__input">
             <mat-label>Category</mat-label>
-            <input matInput placeholder="Electronics" formControlName="category">
+            <mat-select formControlName="category">
+                <mat-option *ngFor="let option of options" [value]="option">
+                  {{option}}
+                </mat-option>
+            </mat-select>
             <mat-hint>Your products category</mat-hint>
         </mat-form-field>
         <button mat-raised-button color="primary" (click)="submitAdd()" [disabled]="createForm.invalid">Create Ad</button>
