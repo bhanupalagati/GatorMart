@@ -21,6 +21,9 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+
+	//swagger "github.com/arsmn/fiber-swagger/v2"
+	_ "main/docs"
 )
 
 var AccessKeyID string
@@ -89,6 +92,15 @@ type RegisterRequest struct {
 	Profession string `json:"profession"`
 	DOB        string `json:"DOB"`
 }
+
+// HealthCheck godoc
+// @Summary Show the status of server.
+// @Description get the status of server.
+// @Tags root
+// @Accept */*
+// @Produce json
+// @Success 200 {object} map[string]interface{}
+// @Router / [get]
 
 func Register(c *fiber.Ctx) error {
 	registerUser := new(RegisterRequest)
