@@ -9,7 +9,9 @@ import { EditFormService } from './edit-form.service';
   styleUrls: ['./ad-form.component.scss']
 })
 export class AdFormComponent implements OnInit {
-  options: string[];
+  categories: string[];
+  targets: string[];
+  conditions: string[];
   @Input() request;
   formData = new FormData();
   lati: string;
@@ -41,7 +43,9 @@ export class AdFormComponent implements OnInit {
   }
 
   getDropDownValues() {
-    this.productsService.getDropdown('categories').subscribe(res => this.options = res);
+    this.productsService.getDropdown('categories').subscribe(res => this.categories = res);
+    this.productsService.getDropdown('target').subscribe(res => this.targets = res);
+    this.productsService.getDropdown('condition').subscribe(res => this.conditions = res);
   }
 
   populateEditForm() {    

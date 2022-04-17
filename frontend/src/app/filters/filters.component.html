@@ -11,7 +11,7 @@
             <mat-form-field appearance="outline" class="ad_form_container__flex__input">
                 <mat-label>Condition</mat-label>
                 <mat-select formControlName="condition">
-                    <mat-option *ngFor="let option of options" [value]="option">
+                    <mat-option *ngFor="let option of conditions" [value]="option">
                       {{option}}
                     </mat-option>
                 </mat-select>
@@ -21,7 +21,7 @@
             <mat-form-field appearance="outline" class="ad_form_container__flex__input">
                 <mat-label>Target</mat-label>
                 <mat-select formControlName="target">
-                    <mat-option *ngFor="let option of options" [value]="option">
+                    <mat-option *ngFor="let option of targets" [value]="option">
                       {{option}}
                     </mat-option>
                 </mat-select>
@@ -37,7 +37,7 @@
             <mat-form-field appearance="outline" class="ad_form_container__flex__input">
                 <mat-label>SortBy</mat-label>
                 <mat-select formControlName="sortBy">
-                    <mat-option *ngFor="let option of options" [value]="option">
+                    <mat-option *ngFor="let option of sortBy" [value]="option">
                       {{option}}
                     </mat-option>
                 </mat-select>
@@ -59,7 +59,7 @@
             <mat-form-field appearance="outline" class="ad_form_container__flex__input">
                 <mat-label>Category</mat-label>
                 <mat-select formControlName="category">
-                    <mat-option *ngFor="let option of options" [value]="option">
+                    <mat-option *ngFor="let option of categories" [value]="option">
                       {{option}}
                     </mat-option>
                 </mat-select>

@@ -9,7 +9,10 @@ import { ProductsService } from '../services/products.service';
   styleUrls: ['./filters.component.scss']
 })
 export class FiltersComponent implements OnInit {
-  options: string[];
+  categories: string[];
+  targets: string[];
+  conditions: string[];
+  sortBy = ['date', 'price']
   filterForm: FormGroup = new FormGroup({
     title: new FormControl(""),
     condition: new FormControl(""),
@@ -31,8 +34,11 @@ export class FiltersComponent implements OnInit {
   }
 
   getDropDownValues() {
-    this.productsService.getDropdown('categories').subscribe(res => this.options = res);
+    this.productsService.getDropdown('categories').subscribe(res => this.categories = res);
+    this.productsService.getDropdown('target').subscribe(res => this.targets = res);
+    this.productsService.getDropdown('condition').subscribe(res => this.conditions = res);
   }
+
 
   applyFilters() {
     this.productsService.filtersApplied = true;
