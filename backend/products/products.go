@@ -398,7 +398,7 @@ func SaveProduct(c *fiber.Ctx) error {
 		return c.Status(400).JSON("Invalid Target")
 	}
 
-	conditionTyp := ConditionType(product.Target)
+	conditionTyp := ConditionType(product.Condition)
 	switch conditionTyp {
 	case Used, LikeNew, OpenBox, New:
 
@@ -528,7 +528,7 @@ func UpdateProduct(c *fiber.Ctx) error {
 	}
 
 	if product.Condition != "" {
-		conditionTyp := ConditionType(product.Target)
+		conditionTyp := ConditionType(product.Condition)
 		switch conditionTyp {
 		case Used, LikeNew, OpenBox, New:
 
