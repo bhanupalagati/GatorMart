@@ -760,7 +760,19 @@ func FilterProducts(c *fiber.Ctx) error {
 				return products[i].Price < products[j].Price
 			})
 		}
+		if filterConditions.SortBy == "date" {
+			sort.SliceStable(products, func(i, j int) bool {
+				// 	if products[i].CreatedAt.Day() != products[j].CreatedAt.Day(){
+				// 	return products[i].CreatedAt.Day() < products[j].CreatedAt.Day()
+				// 	}
+				// if products[i].CreatedAt.Hour() != products[j].CreatedAt.Hour(){
+				// 	return products[i].CreatedAt.Hour() < products[j].CreatedAt.Hour()
+				// }
+				return products[i].CreatedAt.Before(products[j].CreatedAt)
+			})
+		}
 	}
+
 	log.Println(fmt.Sprintf("Number of results obtained %d", len(products)))
 	return c.JSON(&products)
 
