@@ -60,13 +60,13 @@ export class AdFormComponent implements OnInit {
   }
   createAd() {
     this.productsService.createNewProduct({...this.createForm.value, price: +this.createForm.value.price, age: +this.createForm.value.age}).subscribe(res => {
-      this.router.navigate(['/']);
+      this.router.navigate(['/products']);
     });
   }
 
   updateAd() {
     this.productsService.updateProduct(this.editFormService.getProductID(), {...this.createForm.value, price: +this.createForm.value.price, age: +this.createForm.value.age}).subscribe(res => {
-      this.router.navigate(['/']);
+      this.router.navigate(['/products']);
     });
   }
 

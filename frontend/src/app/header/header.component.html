@@ -1,9 +1,9 @@
 <div class="header_container">
-    <div class="group1">
+    <div class="group1" (click)="navigateTo('products')">
         GatorMart
     </div>
     <div class="group2">
-        <mat-slide-toggle>Filters</mat-slide-toggle>
+        <mat-slide-toggle (toggleChange)="filterChange()">Filters</mat-slide-toggle>
         <button mat-button [matMenuTriggerFor]="menu"><mat-icon>person</mat-icon></button>
     </div>
 </div>
@@ -13,11 +13,11 @@
         <mat-icon color="accent">face</mat-icon>
         <span>UserName</span>
     </button>
-    <button mat-menu-item>
+    <button mat-menu-item (click)="navigateTo('myads')">
         <mat-icon color="accent">whatshot</mat-icon>
         <span>My Ads</span>
     </button>
-    <button mat-menu-item>
+    <button mat-menu-item (click)="navigateTo('create')">
         <mat-icon color="accent">create</mat-icon>
         <span>Create Ad</span>
     </button>
