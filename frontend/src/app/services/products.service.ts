@@ -55,12 +55,12 @@ export class ProductsService {
     return this.http.get<string[]>(this.baseUrl+name);
   }
 
-  setCookies(token) {
+  setCookies(name, data, time=24*60*60*1000) {
     let d = new Date();
-    d.setTime(d.getTime()+(24*60*60*1000));
+    d.setTime(d.getTime()+(time));
 
     let expires = "; expires="+d.toUTCString();
-    document.cookie = "token="+token+expires+"; path=/"
+    document.cookie = name+"="+data+expires+"; path=/"
   }
 
   getCookie(name='token') {
@@ -74,10 +74,18 @@ export class ProductsService {
   }
 
   getUserData() {
+    console.log(this.userData);
+    
     return this.userData;
   }
 
   setUserData(userData) {
     this.userData = JSON.parse(JSON.stringify(userData));
+    console.log(this.userData);
+    
+  }
+
+  getProductsByUser() {
+    return this.http.get<Product[]>(this.baseUrl+'productsByUser')
   }
 }

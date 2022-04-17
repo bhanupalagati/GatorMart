@@ -1,4 +1,6 @@
-<app-filters [hidden]="!showFilter"></app-filters>
+<div class="heading">
+    MyAds
+</div>
 <div class="list-container" *ngIf="!loading">
     <app-card *ngFor="let product of productResp" [product]="product"></app-card>
 </div>
