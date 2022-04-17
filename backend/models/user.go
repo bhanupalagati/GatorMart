@@ -16,3 +16,13 @@ type User struct {
 	Profession string `json:"profession"`
 	DOB        time.Time
 }
+
+type UserSwagger struct {
+	UserID     int    `gorm:"primary_key" json:"userId"`
+	FirstName  string `json:"firstname"`
+	LastName   string `json:"lastname"`
+	Email      string `json:"email"`
+	Password   []byte `json:"-"`
+	Profession string `json:"profession"`
+	DOB        time.Time
+}

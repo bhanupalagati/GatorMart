@@ -25,15 +25,9 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/register": {
-            "post": {
-                "description": "user can register fot GatroMart",
-                requestBody:{
-                "schema":{
-                    "type": "object",
-                            "additionalProperties": true
-                }
-                },
+        "/categories": {
+            "get": {
+                "description": "Returns all the product categories",
                 "consumes": [
                     "application/json"
                 ],
@@ -41,17 +35,530 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "root"
+                    "categories"
                 ],
-                "summary": "user can register for GatorMart",
+                "summary": "Get all categories",
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/condition": {
+            "get": {
+                "description": "Returns all the product conditions",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "conditions"
+                ],
+                "summary": "Get all conditions",
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/filterproducts": {
+            "post": {
+                "description": "filters posts based on filtering criteria",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "product"
+                ],
+                "summary": "filters posts based on filtering criteria",
+                "parameters": [
+                    {
+                        "description": "FilterProducts",
+                        "name": "filterConditions",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Filter"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.ProductResponseSwagger"
+                            }
                         }
                     }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "description": "Allows user to login to his account",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Logins a user",
+                "parameters": [
+                    {
+                        "description": "Register",
+                        "name": "registerUser",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/products.RegisterRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.UserSwagger"
+                        }
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "post": {
+                "description": "Allows user to logout of their account",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Logout a user",
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/product": {
+            "post": {
+                "description": "Creates a product post in DB",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "product"
+                ],
+                "summary": "Saves a product post",
+                "parameters": [
+                    {
+                        "description": "SaveProduct",
+                        "name": "product",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ProductResponseSwagger"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ProductResponseSwagger"
+                        }
+                    }
+                }
+            }
+        },
+        "/product/:id": {
+            "get": {
+                "description": "Get a product post by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "product"
+                ],
+                "summary": "get a product post by id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "GetProduct",
+                        "name": "id",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ProductResponseSwagger"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a product post in DB",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "product"
+                ],
+                "summary": "update a product post",
+                "parameters": [
+                    {
+                        "description": "UpdateProduct",
+                        "name": "product",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ProductResponseSwagger"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ProductResponseSwagger"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete a product post in DB",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "product"
+                ],
+                "summary": "delete a product post",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "DeleteProduct",
+                        "name": "id",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/product/upload": {
+            "post": {
+                "description": "Uploads image in Amazon S3",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "product"
+                ],
+                "summary": "uploads image",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "UploadImage",
+                        "name": "files",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/products": {
+            "get": {
+                "description": "Returns all the product posts",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "products"
+                ],
+                "summary": "Get all products",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.ProductResponseSwagger"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/productsByUser": {
+            "get": {
+                "description": "get products posted by user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "product"
+                ],
+                "summary": "get products posted by user",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.ProductResponseSwagger"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/register": {
+            "post": {
+                "description": "Creates a GatorMart user account",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Registers a user",
+                "parameters": [
+                    {
+                        "description": "Register",
+                        "name": "registerUser",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/products.RegisterRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.UserSwagger"
+                        }
+                    }
+                }
+            }
+        },
+        "/target": {
+            "get": {
+                "description": "Returns all the product target",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "target"
+                ],
+                "summary": "Get all target",
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Filter": {
+            "type": "object",
+            "properties": {
+                "category": {
+                    "type": "string"
+                },
+                "condition": {
+                    "type": "string"
+                },
+                "price": {
+                    "$ref": "#/definitions/models.PriceFilter"
+                },
+                "sortBy": {
+                    "type": "string"
+                },
+                "target": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.PriceFilter": {
+            "type": "object",
+            "properties": {
+                "fromValue": {
+                    "type": "integer"
+                },
+                "operator": {
+                    "type": "string"
+                },
+                "toValue": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.ProductResponseSwagger": {
+            "type": "object",
+            "properties": {
+                "age": {
+                    "type": "integer"
+                },
+                "category": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "condition": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "imageUrl": {
+                    "type": "string"
+                },
+                "images": {
+                    "type": "string"
+                },
+                "location_lat": {
+                    "type": "string"
+                },
+                "location_long": {
+                    "type": "string"
+                },
+                "posted_by": {
+                    "type": "integer"
+                },
+                "posted_date": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "integer"
+                },
+                "secondary_title": {
+                    "type": "string"
+                },
+                "simple_desc": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "target": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string",
+                    "example": "random"
+                }
+            }
+        },
+        "models.UserSwagger": {
+            "type": "object",
+            "properties": {
+                "dob": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "firstname": {
+                    "type": "string"
+                },
+                "lastname": {
+                    "type": "string"
+                },
+                "profession": {
+                    "type": "string"
+                },
+                "userId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "products.RegisterRequest": {
+            "type": "object",
+            "properties": {
+                "DOB": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "firstname": {
+                    "description": "Name     string ` + "`" + `json:\"name\"` + "`" + `\nEmail    string ` + "`" + `json:\"email\"` + "`" + `\nPassword string ` + "`" + `json:\"password\"` + "`" + `",
+                    "type": "string"
+                },
+                "lastname": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "profession": {
+                    "type": "string"
                 }
             }
         }

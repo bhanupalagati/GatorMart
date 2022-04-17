@@ -71,7 +71,7 @@ func Routers(app *fiber.App) {
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 
 // @host localhost:8000
-// @BasePath /api
+// @BasePath /
 // @schemes http
 func main() {
 	products.InitialMigration()

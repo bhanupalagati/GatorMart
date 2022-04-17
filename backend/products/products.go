@@ -94,15 +94,15 @@ type RegisterRequest struct {
 	DOB        string `json:"DOB"`
 }
 
-// HealthCheck godoc
-// @Summary Show the status of server.
-// @Description get the status of server.
-// @Tags root
-// @Accept */*
-// @Produce json
-// @Success 200 {object} map[string]interface{}
-// @Router / [get]
-
+// RegisterUser godoc
+// @Summary Registers a user
+// @Description Creates a GatorMart user account
+// @Tags user
+// @Accept  json
+// @Produce  json
+// @Param registerUser body RegisterRequest true "Register"
+// @Success 200 {object} models.UserSwagger
+// @Router /register [post]
 func Register(c *fiber.Ctx) error {
 	registerUser := new(RegisterRequest)
 
@@ -269,6 +269,15 @@ func getDOB(year, month, day int) time.Time {
 	return dob
 }
 
+// Login godoc
+// @Summary Logins a user
+// @Description Allows user to login to his account
+// @Tags user
+// @Accept  json
+// @Produce  json
+// @Param registerUser body RegisterRequest true "Register"
+// @Success 200 {object} models.UserSwagger
+// @Router /login [post]
 func Login(c *fiber.Ctx) error {
 	user := new(RegisterRequest)
 
@@ -337,11 +346,20 @@ func Login(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{
 		"message": "login success",
 		"token":   token,
+		"user":    dbUser,
 		//"cookie":  cookie,
 	})
 
 }
 
+// Logout godoc
+// @Summary Logout a user
+// @Description Allows user to logout of their account
+// @Tags user
+// @Accept  json
+// @Produce  json
+// @Success 200
+// @Router /logout [post]
 func Logout(c *fiber.Ctx) error {
 	cookie := fiber.Cookie{
 		Name:     "cookie",
@@ -397,6 +415,15 @@ func Logout(c *fiber.Ctx) error {
 // 	return user, authorised
 // }
 
+// SaveProduct godoc
+// @Summary Saves a product post
+// @Description Creates a product post in DB
+// @Tags product
+// @Accept  json
+// @Produce  json
+// @Param product body models.ProductResponseSwagger true "SaveProduct"
+// @Success 200 {object} models.ProductResponseSwagger
+// @Router /product [post]
 func SaveProduct(c *fiber.Ctx) error {
 	// _, authorized := UserAuthorized(c)
 	// if !authorized {
@@ -474,18 +501,43 @@ func SaveProduct(c *fiber.Ctx) error {
 	DB.Create(&product)
 	return c.JSON(&product)
 }
+
+// GetCatergories godoc
+// @Summary Get all categories
+// @Description Returns all the product categories
+// @Tags categories
+// @Accept  json
+// @Produce  json
+// @Success 200
+// @Router /categories [get]
 func GetCatergories(c *fiber.Ctx) error {
 	a := [...]string{"Automobile", "Mobile", "ElectronicsAppliances", "Furniture", "Books", "Sports", "Pets"}
 	fmt.Println("a is ", a)
 	return c.JSON(a)
 }
 
+// GetTarget godoc
+// @Summary Get all target
+// @Description Returns all the product target
+// @Tags target
+// @Accept  json
+// @Produce  json
+// @Success 200
+// @Router /target [get]
 func GetTarget(c *fiber.Ctx) error {
 	a := [...]string{"Student", "Farmer", "Businessmen", "Engineer", "Other"}
 	fmt.Println("a is ", a)
 	return c.JSON(a)
 }
 
+// GetCondition godoc
+// @Summary Get all conditions
+// @Description Returns all the product conditions
+// @Tags conditions
+// @Accept  json
+// @Produce  json
+// @Success 200
+// @Router /condition [get]
 func GetCondition(c *fiber.Ctx) error {
 	a := [...]string{"Used", "LikeNew", "OpenBox", "New"}
 	fmt.Println("a is ", a)
@@ -516,6 +568,14 @@ func IsValidCondition(lt ConditionType) error {
 	return errors.New("Invalid Condition type")
 }
 
+// GetProducts godoc
+// @Summary Get all products
+// @Description Returns all the product posts
+// @Tags products
+// @Accept  json
+// @Produce  json
+// @Success 200 {array} models.ProductResponseSwagger
+// @Router /products [get]
 func GetProducts(c *fiber.Ctx) error {
 	// _, authorized := UserAuthorized(c)
 	// if !authorized {
@@ -526,6 +586,14 @@ func GetProducts(c *fiber.Ctx) error {
 	return c.JSON(&products)
 }
 
+// GetProductsByUser godoc
+// @Summary get products posted by user
+// @Description get products posted by user
+// @Tags product
+// @Accept  json
+// @Produce  json
+// @Success 200 {array} models.ProductResponseSwagger
+// @Router /productsByUser [get]
 func GetProductsByUser(c *fiber.Ctx) error {
 	// _, authorized := UserAuthorized(c)
 	// if !authorized {
@@ -555,6 +623,15 @@ func GetProductsByUser(c *fiber.Ctx) error {
 	return c.JSON(&products)
 }
 
+// GetProduct godoc
+// @Summary get a product post by id
+// @Description Get a product post by id
+// @Tags product
+// @Accept  json
+// @Produce  json
+// @Param id header int true "GetProduct"
+// @Success 200 {object} models.ProductResponseSwagger
+// @Router /product/:id [get]
 func GetProduct(c *fiber.Ctx) error {
 	// _, authorized := UserAuthorized(c)
 	// if !authorized {
@@ -572,6 +649,15 @@ func GetProduct(c *fiber.Ctx) error {
 	return c.JSON(&product)
 }
 
+// UpdateProduct godoc
+// @Summary update a product post
+// @Description Update a product post in DB
+// @Tags product
+// @Accept  json
+// @Produce  json
+// @Param product body models.ProductResponseSwagger true "UpdateProduct"
+// @Success 200 {object} models.ProductResponseSwagger
+// @Router /product/:id [put]
 func UpdateProduct(c *fiber.Ctx) error {
 	// _, authorized := UserAuthorized(c)
 	// if !authorized {
@@ -629,6 +715,15 @@ func UpdateProduct(c *fiber.Ctx) error {
 
 }
 
+// DeleteProduct godoc
+// @Summary delete a product post
+// @Description delete a product post in DB
+// @Tags product
+// @Accept  json
+// @Produce  json
+// @Param id header int true "DeleteProduct"
+// @Success 200
+// @Router /product/:id [delete]
 func DeleteProduct(c *fiber.Ctx) error {
 	// _, authorized := UserAuthorized(c)
 	// if !authorized {
@@ -647,6 +742,15 @@ func DeleteProduct(c *fiber.Ctx) error {
 	return c.JSON("Product ad is deleted")
 }
 
+// UploadImage godoc
+// @Summary uploads image
+// @Description Uploads image in Amazon S3
+// @Tags product
+// @Accept  json
+// @Produce  json
+// @Param files formData file true "UploadImage"
+// @Success 200
+// @Router /product/upload [post]
 func UploadImage(c *fiber.Ctx) error {
 	// _, authorized := UserAuthorized(c)
 	// if !authorized {
@@ -747,6 +851,15 @@ func UploadImage(c *fiber.Ctx) error {
 
 }
 
+// FilterProducts godoc
+// @Summary filters posts based on filtering criteria
+// @Description filters posts based on filtering criteria
+// @Tags product
+// @Accept  json
+// @Produce  json
+// @Param filterConditions body models.Filter true "FilterProducts"
+// @Success 200 {array} models.ProductResponseSwagger
+// @Router /filterproducts [post]
 func FilterProducts(c *fiber.Ctx) error {
 	// _, authorized := UserAuthorized(c)
 	// if !authorized {

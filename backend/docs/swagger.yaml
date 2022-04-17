@@ -1,4 +1,103 @@
 basePath: /
+definitions:
+  models.Filter:
+    properties:
+      category:
+        type: string
+      condition:
+        type: string
+      price:
+        $ref: '#/definitions/models.PriceFilter'
+      sortBy:
+        type: string
+      target:
+        type: string
+      title:
+        type: string
+    type: object
+  models.PriceFilter:
+    properties:
+      fromValue:
+        type: integer
+      operator:
+        type: string
+      toValue:
+        type: integer
+    type: object
+  models.ProductResponseSwagger:
+    properties:
+      age:
+        type: integer
+      category:
+        type: string
+      city:
+        type: string
+      condition:
+        type: string
+      description:
+        type: string
+      imageUrl:
+        type: string
+      images:
+        type: string
+      location_lat:
+        type: string
+      location_long:
+        type: string
+      posted_by:
+        type: integer
+      posted_date:
+        type: string
+      price:
+        type: integer
+      secondary_title:
+        type: string
+      simple_desc:
+        type: string
+      state:
+        type: string
+      status:
+        type: string
+      target:
+        type: string
+      title:
+        example: random
+        type: string
+    type: object
+  models.UserSwagger:
+    properties:
+      dob:
+        type: string
+      email:
+        type: string
+      firstname:
+        type: string
+      lastname:
+        type: string
+      profession:
+        type: string
+      userId:
+        type: integer
+    type: object
+  products.RegisterRequest:
+    properties:
+      DOB:
+        type: string
+      email:
+        type: string
+      firstname:
+        description: |-
+          Name     string `json:"name"`
+          Email    string `json:"email"`
+          Password string `json:"password"`
+        type: string
+      lastname:
+        type: string
+      password:
+        type: string
+      profession:
+        type: string
+    type: object
 host: localhost:8000
 info:
   contact:
@@ -13,22 +112,261 @@ info:
   title: Fiber Swagger Example API
   version: "2.0"
 paths:
-  /register:
+  /categories:
+    get:
+      consumes:
+      - application/json
+      description: Returns all the product categories
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Get all categories
+      tags:
+      - categories
+  /condition:
+    get:
+      consumes:
+      - application/json
+      description: Returns all the product conditions
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Get all conditions
+      tags:
+      - conditions
+  /filterproducts:
     post:
       consumes:
-      - '*/*'
-      description: get the status of server.
+      - application/json
+      description: filters posts based on filtering criteria
+      parameters:
+      - description: FilterProducts
+        in: body
+        name: filterConditions
+        required: true
+        schema:
+          $ref: '#/definitions/models.Filter'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            additionalProperties: true
-            type: object
-      summary: Show the status of server.
+            items:
+              $ref: '#/definitions/models.ProductResponseSwagger'
+            type: array
+      summary: filters posts based on filtering criteria
       tags:
-      - root
+      - product
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Allows user to login to his account
+      parameters:
+      - description: Register
+        in: body
+        name: registerUser
+        required: true
+        schema:
+          $ref: '#/definitions/products.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UserSwagger'
+      summary: Logins a user
+      tags:
+      - user
+  /logout:
+    post:
+      consumes:
+      - application/json
+      description: Allows user to logout of their account
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Logout a user
+      tags:
+      - user
+  /product:
+    post:
+      consumes:
+      - application/json
+      description: Creates a product post in DB
+      parameters:
+      - description: SaveProduct
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/models.ProductResponseSwagger'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ProductResponseSwagger'
+      summary: Saves a product post
+      tags:
+      - product
+  /product/:id:
+    delete:
+      consumes:
+      - application/json
+      description: delete a product post in DB
+      parameters:
+      - description: DeleteProduct
+        in: header
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: delete a product post
+      tags:
+      - product
+    get:
+      consumes:
+      - application/json
+      description: Get a product post by id
+      parameters:
+      - description: GetProduct
+        in: header
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ProductResponseSwagger'
+      summary: get a product post by id
+      tags:
+      - product
+    put:
+      consumes:
+      - application/json
+      description: Update a product post in DB
+      parameters:
+      - description: UpdateProduct
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/models.ProductResponseSwagger'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ProductResponseSwagger'
+      summary: update a product post
+      tags:
+      - product
+  /product/upload:
+    post:
+      consumes:
+      - application/json
+      description: Uploads image in Amazon S3
+      parameters:
+      - description: UploadImage
+        in: formData
+        name: files
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: uploads image
+      tags:
+      - product
+  /products:
+    get:
+      consumes:
+      - application/json
+      description: Returns all the product posts
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.ProductResponseSwagger'
+            type: array
+      summary: Get all products
+      tags:
+      - products
+  /productsByUser:
+    get:
+      consumes:
+      - application/json
+      description: get products posted by user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.ProductResponseSwagger'
+            type: array
+      summary: get products posted by user
+      tags:
+      - product
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: Creates a GatorMart user account
+      parameters:
+      - description: Register
+        in: body
+        name: registerUser
+        required: true
+        schema:
+          $ref: '#/definitions/products.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.UserSwagger'
+      summary: Registers a user
+      tags:
+      - user
+  /target:
+    get:
+      consumes:
+      - application/json
+      description: Returns all the product target
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ""
+      summary: Get all target
+      tags:
+      - target
 schemes:
 - http
 swagger: "2.0"
