@@ -12,6 +12,7 @@ export class ProductsService {
   filtersApplied = false;
   applyFilters = new BehaviorSubject({});
   dropDowns = {};
+  filterMenuToggled = new BehaviorSubject(false);
   constructor(private http: HttpClient) { }
 
   getProductList() {

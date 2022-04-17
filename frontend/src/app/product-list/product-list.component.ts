@@ -11,12 +11,17 @@ import { ProductsService } from '../services/products.service';
 })
 
 export class ProductListComponent implements OnInit, OnDestroy {
+  showFilter = false;
   productResp: Product[];
   loading = true;
   subscription: Subscription;
   constructor(private productsService: ProductsService) { }
 
   ngOnInit(): void {
+    this.productsService.filterMenuToggled.subscribe(res => {
+      this.showFilter = res;
+    });
+    
     this.apiCall(this.productsService.applyFilters.value);
     this.filterSubscription();
   }
