@@ -167,7 +167,63 @@ func Register(c *fiber.Ctx) error {
 	}
 	fmt.Println("pswdLowercase:", pswdLowercase, "\npswdUppercase:", pswdUppercase, "\npswdNumber:", pswdNumber, "\npswdSpecial:", pswdSpecial, "\npswdLength:", pswdLength, "\npswdNoSpaces:", pswdNoSpaces, "\nfirstNameAlphaNumeric:", firstNameAlphaNumeric, "\nlasttNameAlphaNumeric:", lastNameAlphaNumeric, "\nfirstNameLength:", firstNameLength, "\nlastNameLength:", lastNameLength)
 	if !pswdLowercase || !pswdUppercase || !pswdNumber || !pswdSpecial || !pswdLength || !pswdNoSpaces || !firstNameAlphaNumeric || !lastNameAlphaNumeric || !firstNameLength || !lastNameLength {
+		if !pswdLowercase {
+			return c.Status(400).JSON(fiber.Map{
+				"message": "password doesnt contain lowercase letter",
+			})
+		}
+		if !pswdUppercase {
+			return c.Status(400).JSON(fiber.Map{
+				"message": "password doesnt contain uppercase letter",
+			})
+		}
+		if !pswdNumber {
+			return c.Status(400).JSON(fiber.Map{
+				"message": "password doesnt contain any number",
+			})
+		}
 
+		if !pswdSpecial {
+			return c.Status(400).JSON(fiber.Map{
+				"message": "password doesnt contain any special character",
+			})
+		}
+
+		if !pswdLength {
+			return c.Status(400).JSON(fiber.Map{
+				"message": "password length should be greater than 8 and less than 60",
+			})
+		}
+
+		if !pswdNoSpaces {
+			return c.Status(400).JSON(fiber.Map{
+				"message": "password shouldnot contains spaces",
+			})
+		}
+
+		if !firstNameAlphaNumeric {
+			return c.Status(400).JSON(fiber.Map{
+				"message": "firstname should be alphanumeric",
+			})
+		}
+
+		if !lastNameAlphaNumeric {
+			return c.Status(400).JSON(fiber.Map{
+				"message": "lastname should be alphanumeric",
+			})
+		}
+
+		if !firstNameLength {
+			return c.Status(400).JSON(fiber.Map{
+				"message": "first name length should be greater than or equal to 5 and less than or equal to 50",
+			})
+		}
+
+		if !lastNameLength {
+			return c.Status(400).JSON(fiber.Map{
+				"message": "last name length should be greater than or equal to 5 and less than or equal to 50",
+			})
+		}
 		return c.Status(400).JSON(fiber.Map{
 			"message": "please check username and password criteria",
 		})
