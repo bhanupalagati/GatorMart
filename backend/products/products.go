@@ -526,6 +526,35 @@ func GetProducts(c *fiber.Ctx) error {
 	return c.JSON(&products)
 }
 
+func GetProductsByUser(c *fiber.Ctx) error {
+	// _, authorized := UserAuthorized(c)
+	// if !authorized {
+	// 	return c.Status(401).JSON("User not authorized")
+	// }
+	bearerToken := c.Get("authorization")
+	println(bearerToken)
+	tokenString := strings.Split(bearerToken, " ")[1]
+	claims := jwt.MapClaims{}
+	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
+		return []byte(KeyForAuthentication), nil
+	})
+
+	if err != nil {
+		c.Status(fiber.StatusUnauthorized)
+		return c.JSON(fiber.Map{
+			"message": "User unauthenticated",
+		})
+		println(token)
+	}
+	p := uint(claims["userid"].(float64))
+	//	println(p)
+
+	var products []models.Product
+	DB.Where("posted_by = ?", p).Find(&products)
+	//	println(len(products))
+	return c.JSON(&products)
+}
+
 func GetProduct(c *fiber.Ctx) error {
 	// _, authorized := UserAuthorized(c)
 	// if !authorized {
