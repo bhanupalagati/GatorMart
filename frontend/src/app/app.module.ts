@@ -34,6 +34,7 @@ import { InterceptorService } from './interceptor.service';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { FiltersComponent } from './filters/filters.component';
 import { HeaderComponent } from './header/header.component';
+import { MyAdsComponent } from './my-ads/my-ads.component';
 
 
 const materialImports = [
@@ -62,7 +63,8 @@ const materialImports = [
     LoginComponent,
     SignupComponent,
     FiltersComponent,
-    HeaderComponent
+    HeaderComponent,
+    MyAdsComponent
   ],
   imports: [
     BrowserModule,

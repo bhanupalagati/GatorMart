@@ -17,21 +17,24 @@ export class LoginComponent implements OnInit {
   constructor(private productsService: ProductsService, private router: Router) { }
 
   ngOnInit(): void {
-    // this.checkCookies();
+    this.checkCookies();
   }
 
   checkCookies() {
     this.token = this.productsService.getCookie();
-    this.productsService.validateCookie({token: this.token}).subscribe(res => {
-
+    this.productsService.getDropdown('categories').subscribe(res => {
+      if (res) {
+        this.router.navigate(['/products']);
+      }
     });
   }
   login() {
     this.productsService.signInUser(this.loginForm.value).subscribe((res: any) => {
       this.productsService.setUserData(res);
-      this.productsService.setCookies(res.token);
+      this.productsService.setCookies('token', res.token);
+      this.productsService.setCookies('userInfo', JSON.stringify(res));
       this.router.navigate(['/products']);
-  });
+    });
   }
 
 }

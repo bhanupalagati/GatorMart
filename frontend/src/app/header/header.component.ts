@@ -27,4 +27,10 @@ export class HeaderComponent implements OnInit {
     this.productsService.filterMenuToggled.next(this.showFilter);
   }
 
+  logout() {
+    this.productsService.setCookies('token', '', 0);
+    this.productsService.setCookies('userInfo', '', 0);
+    this.router.navigate(['/']);
+  }
+
 }
