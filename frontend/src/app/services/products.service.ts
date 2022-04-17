@@ -51,7 +51,6 @@ export class ProductsService {
   }
 
   getDropdown(name) {
-    return of(['option1', 'option2', 'option3', 'option4']);
     return this.http.get<string[]>(this.baseUrl+name);
   }
 
