@@ -31,7 +31,7 @@
                 <mat-icon aria-hidden="false" aria-label="Example home icon" color="primary"> chat </mat-icon>
             </div>
         </div>
-        <div class="details_container__actions">
+        <div class="details_container__actions" [hidden]="userDetails.ID != product.posted_by">
             <div class="details_container__actions__edit">
                 <button mat-raised-button color="primary" (click)="editForm()">Edit</button>
             </div>

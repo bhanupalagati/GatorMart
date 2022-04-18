@@ -1,4 +1,4 @@
-<div class="header_container">
+<div class="header_container" [hidden]="!userDetails.firstname">
     <div class="group1" (click)="navigateTo('products')">
         GatorMart
     </div>
@@ -11,7 +11,7 @@
 <mat-menu #menu="matMenu">
     <button mat-menu-item>
         <mat-icon color="accent">face</mat-icon>
-        <span>UserName</span>
+        <span>{{ userDetails?.firstname }}</span>
     </button>
     <button mat-menu-item (click)="navigateTo('myads')">
         <mat-icon color="accent">whatshot</mat-icon>
