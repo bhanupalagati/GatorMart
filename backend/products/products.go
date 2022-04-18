@@ -415,6 +415,14 @@ func Logout(c *fiber.Ctx) error {
 // 	return user, authorised
 // }
 
+// AuthorizeAndReturnUserDetails godoc
+// @Summary authorize user and returns users details
+// @Description authorize user and returns users details
+// @Tags products
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} models.UserSwagger
+// @Router /authorize [get]
 func AuthorizeAndReturnUserDetails(c *fiber.Ctx) error {
 	bearerToken := c.Get("authorization")
 	println(bearerToken)
