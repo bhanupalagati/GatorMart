@@ -415,6 +415,29 @@ func Logout(c *fiber.Ctx) error {
 // 	return user, authorised
 // }
 
+func AuthorizeAndReturnUserDetails(c *fiber.Ctx) error {
+	bearerToken := c.Get("authorization")
+	println(bearerToken)
+	tokenString := strings.Split(bearerToken, " ")[1]
+	claims := jwt.MapClaims{}
+	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
+		return []byte(KeyForAuthentication), nil
+	})
+
+	if err != nil {
+		c.Status(fiber.StatusUnauthorized)
+		return c.JSON(fiber.Map{
+			"message": "User unauthenticated",
+		})
+		println(token)
+	}
+
+	p := uint(claims["userid"].(float64))
+	user := new(models.User)
+	DB.Find(&user, p)
+	return c.JSON(&user)
+}
+
 // SaveProduct godoc
 // @Summary Saves a product post
 // @Description Creates a product post in DB

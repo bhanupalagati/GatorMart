@@ -30,6 +30,7 @@ func Routers(app *fiber.App) {
 		SigningKey: []byte("secret"),
 	}))
 	// app.Get("/products", products.GetProducts)
+	app.Get("/authorize", products.AuthorizeAndReturnUserDetails)
 	app.Post("/product", products.SaveProduct)
 	app.Get("/product/:id", products.GetProduct)
 	app.Put("/product/:id", products.UpdateProduct)
