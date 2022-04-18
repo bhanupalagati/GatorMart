@@ -13,13 +13,17 @@ export class HeaderComponent implements OnInit {
   userDetails: any;
   showFilter = false;
   ngOnInit(): void {
-    this.userDetails = this.productsService.getUserData();
-    console.log(this.userDetails);
-    
+    setTimeout(() => {
+      if (!this.router.url.includes('signup')) {
+        this.login();
+      }
+    }, 100);
+
+    this.productsService.userData.subscribe(res => this.userDetails = res);
   }
 
   navigateTo(url) {
-    this.router.navigate(['/'+url]);
+    this.router.navigate(['/' + url]);
   }
 
   filterChange() {
@@ -27,7 +31,22 @@ export class HeaderComponent implements OnInit {
     this.productsService.filterMenuToggled.next(this.showFilter);
   }
 
+  login() {
+    this.productsService.validateCookie().subscribe(res => {
+      this.userDetails = res;
+      this.productsService.userData.next(res);
+      console.log(res);
+
+    }, err => {
+      console.table(err);
+
+      this.router.navigate(['/']);
+    }
+    );
+  }
+
   logout() {
+    this.productsService.userData.next({})
     this.productsService.setCookies('token', '', 0);
     this.productsService.setCookies('userInfo', '', 0);
     this.router.navigate(['/']);

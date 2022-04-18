@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Product, ProductResponse } from '../interfaces/product.interface';
-import { BehaviorSubject, of } from 'rxjs';
+import { Product } from '../interfaces/product.interface';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
   baseUrl = "http://127.0.0.1:8000/";
-  userData: any;
+  userData = new BehaviorSubject({})
   filtersApplied = false;
   applyFilters = new BehaviorSubject({});
   dropDowns = {};
@@ -69,20 +69,8 @@ export class ProductsService {
     if (parts.length >= 2) return parts.pop().split(";").shift();
   }
 
-  validateCookie(token) {
-    return this.http.post(this.baseUrl+'validate', token)
-  }
-
-  getUserData() {
-    console.log(this.userData);
-    
-    return this.userData;
-  }
-
-  setUserData(userData) {
-    this.userData = JSON.parse(JSON.stringify(userData));
-    console.log(this.userData);
-    
+  validateCookie() {
+    return this.http.get(this.baseUrl+'authorize')
   }
 
   getProductsByUser() {

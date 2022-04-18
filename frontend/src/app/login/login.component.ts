@@ -21,16 +21,18 @@ export class LoginComponent implements OnInit {
   }
 
   checkCookies() {
-    this.token = this.productsService.getCookie();
-    this.productsService.getDropdown('categories').subscribe(res => {
+    this.productsService.validateCookie().subscribe(res => {
       if (res) {
+        this.productsService.userData.next(res);
         this.router.navigate(['/products']);
       }
     });
   }
   login() {
     this.productsService.signInUser(this.loginForm.value).subscribe((res: any) => {
-      this.productsService.setUserData(res);
+      console.table(res);
+      
+      this.productsService.userData.next(res.user);
       this.productsService.setCookies('token', res.token);
       this.productsService.setCookies('userInfo', JSON.stringify(res));
       this.router.navigate(['/products']);

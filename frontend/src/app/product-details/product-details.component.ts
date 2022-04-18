@@ -18,6 +18,7 @@ export class ProductDetailsComponent implements OnInit {
   images: string[];
   id: string;
   loading = true;
+  userDetails: any;
   constructor(private activatedRoute: ActivatedRoute,
     private productService: ProductsService, public dialog: MatDialog,
     private editFormService: EditFormService, private router: Router) { }
@@ -25,6 +26,7 @@ export class ProductDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.activatedRoute.snapshot.paramMap.get("id");
     this.fetchProduct();
+    this.productService.userData.subscribe(res => this.userDetails = res);
   }
 
   editForm() {
