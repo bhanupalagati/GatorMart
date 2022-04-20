@@ -449,7 +449,7 @@ func TestAuthorizeAndReturnUserDetailsFailure(t *testing.T) {
 
 func TestGetTargetSucess(t *testing.T) {
 	var data = []byte(`{
-		"Category" = "ElectronicsAppliances"
+		"Target" = "Students"
 }`)
 
 	app := fiber.New()
@@ -467,7 +467,7 @@ func TestGetTargetSucess(t *testing.T) {
 
 func TestGetTargetFailure(t *testing.T) {
 	var data = []byte(`{
-		"Category" = "Bikes"
+		"Target" = "Bikes"
 }`)
 
 	app := fiber.New()
