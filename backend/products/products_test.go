@@ -2,6 +2,7 @@ package products
 
 import (
 	"bytes"
+	_ "main/docs"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -429,6 +430,42 @@ func TestAuthorizeAndReturnUserDetailsSucess(t *testing.T) {
 }
 
 func TestAuthorizeAndReturnUserDetailsFailure(t *testing.T) {
+	var data = []byte(`{
+		"Category" = "Bikes"
+}`)
+
+	app := fiber.New()
+
+	req, _ := http.NewRequest("POST", "/api/createGroup", bytes.NewBuffer(data))
+
+	response, err := app.Test(req)
+
+	if err != nil {
+		t.Errorf("Handler Returned a fail status code")
+	}
+
+	assert.Equal(t, fiber.StatusNotFound, response.StatusCode)
+}
+
+func TestGetTargetSucess(t *testing.T) {
+	var data = []byte(`{
+		"Category" = "ElectronicsAppliances"
+}`)
+
+	app := fiber.New()
+
+	req, _ := http.NewRequest("POST", "/api/createGroup", bytes.NewBuffer(data))
+
+	response, err := app.Test(req)
+
+	if err != nil {
+		t.Errorf("Handler Returned a sucess status code")
+	}
+
+	assert.Equal(t, fiber.StatusNotFound, response.StatusCode)
+}
+
+func TestGetTargetFailure(t *testing.T) {
 	var data = []byte(`{
 		"Category" = "Bikes"
 }`)
