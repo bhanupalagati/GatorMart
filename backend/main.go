@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"main/products"
+	"os"
 
 	//swagger "github.com/arsmn/fiber-swagger"
 	swagger "github.com/arsmn/fiber-swagger/v2"
@@ -88,6 +89,7 @@ func main() {
 	// app.Get("/login", Login)
 	// app.Post("/user", users.SaveUser)
 	// default
-	log.Fatal(app.Listen(":8000"))
+	//log.Fatal(app.Listen(":8000"))
+	log.Fatal(app.Listen(":" + os.Getenv("PORT")))
 
 }
