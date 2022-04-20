@@ -518,3 +518,39 @@ func TestGetConditionFailure(t *testing.T) {
 
 	assert.Equal(t, fiber.StatusNotFound, response.StatusCode)
 }
+
+func TestGetProductsByUserSucess(t *testing.T) {
+	var data = []byte(`{
+		
+}`)
+
+	app := fiber.New()
+
+	req, _ := http.NewRequest("POST", "/api/createGroup", bytes.NewBuffer(data))
+
+	response, err := app.Test(req)
+
+	if err != nil {
+		t.Errorf("Handler Returned a sucess status code")
+	}
+
+	assert.Equal(t, fiber.StatusNotFound, response.StatusCode)
+}
+
+func TestGetProductsByUserFailure(t *testing.T) {
+	var data = []byte(`{
+		
+}`)
+
+	app := fiber.New()
+
+	req, _ := http.NewRequest("POST", "/api/createGroup", bytes.NewBuffer(data))
+
+	response, err := app.Test(req)
+
+	if err != nil {
+		t.Errorf("Handler Returned a fail status code")
+	}
+
+	assert.Equal(t, fiber.StatusNotFound, response.StatusCode)
+}
