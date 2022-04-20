@@ -477,7 +477,7 @@ func TestGetTargetFailure(t *testing.T) {
 	response, err := app.Test(req)
 
 	if err != nil {
-		t.Errorf("Handler Returned a fail status code")
+		t.Errorf("Handler  Returned a fail status code")
 	}
 
 	assert.Equal(t, fiber.StatusNotFound, response.StatusCode)
