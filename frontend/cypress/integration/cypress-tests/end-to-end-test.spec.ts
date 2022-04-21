@@ -161,29 +161,29 @@
 /// <reference types ="cypress" />
 
 describe('Register an user', function () {
-    it('Sign up', function() {
-        cy.visit('http://localhost:4200/signup')
+    // it('Sign up', function() {
+    //     cy.visit('http://localhost:4200/signup')
         
-    })
-    it('Form Fill', function() {
-        cy.get('input')
-        .eq(1).type('newuser@gatormart.com')
-        cy.get('input')
-        .eq(2).type('passypass123')
-        cy.get('input')
-        .eq(3).type('passypass123')
-        cy.get('input')
-        .eq(4).type('student')
-        cy.get('input')
-        .eq(5).type('Gator')
-        cy.get('input')
-        .eq(6).type('Albert')
-        cy.get('input')
-        .eq(7).invoke('removeAttr','type').type('05-02-2011');
-    })
-    it('Submit registration form', function() {
-        cy.get('button').eq(1).click()       
-        })
+    // })
+    // it('Form Fill', function() {
+    //     cy.get('input')
+    //     .eq(1).type('newuser@gatormart.com')
+    //     cy.get('input')
+    //     .eq(2).type('passypass123')
+    //     cy.get('input')
+    //     .eq(3).type('passypass123')
+    //     cy.get('input')
+    //     .eq(4).type('student')
+    //     cy.get('input')
+    //     .eq(5).type('Gator')
+    //     cy.get('input')
+    //     .eq(6).type('Albert')
+    //     cy.get('input')
+    //     .eq(7).invoke('removeAttr','type').type('05-02-2011');
+    // })
+    // it('Submit registration form', function() {
+    //     cy.get('button').eq(1).click()       
+    //     })
 
     it('Sign up functionality', function() {
         cy.visit('http://localhost:4200/')
@@ -192,14 +192,62 @@ describe('Register an user', function () {
     it('Login function', function() {
         //Email
         cy.get('input')
-        .eq(1).type('user@gatormart.com') 
+        .eq(1).type('student@user.com') 
         //Password
         cy.get('input')
-        .eq(2).type('Password1$') 
+        .eq(2).type('Test@1234') 
     })
-    it('Submit Button', function() {
-        cy.get('button').eq(1).click()       
+    //Access a Product
+    it('Login Button', function() {
+        cy.get('button').eq(1).click() 
+        cy.wait(5000)      
     })
 
+    it('Click 1st product and move into detailed view', function() {
+        cy.get('mat-card').eq(0).click()
+        // cy.wait(5000)
+        // cy.scrollTo('bottom')
+        // cy.wait(1500)
+        // cy.scrollTo('top') 
+        
+   })
+    // //Also check the carousel
+    // it('Control the carousel movement', function() {
+    //     cy.get('app-product-details')
+    //     .find('ngb-carousel')
+    //     .find('a')
+    //     .eq(1)
+    //     .click()
+    //     cy.wait(1000)
+    //     cy.get('app-product-details')
+    //     .find('ngb-carousel').find('a').eq(1)
+    //     .click()
+    //     cy.wait(1000)
+    //     cy.get('app-product-details')
+    //     .find('ngb-carousel').find('a')
+    //     .eq(1)
+    //     .click()
+    //     cy.wait(1000)
+    //     cy.get('app-product-details')
+    //     .find('ngb-carousel')
+    //     .find('a').eq(0)
+    //     .click()
+    //     cy.wait(1000)
+    //     cy.get('app-product-details')
+    //     .find('ngb-carousel').find('a').eq(0)
+    //     .click()
+    //     cy.wait(1000)
+        
+    // })
 
-})
+    // //Access the profile button
+    // it('Access the profile button', function() {
+    //     cy.get('button').eq(0).click() 
+    // })
+
+    //Logout
+    // it('LogOut button', function() {
+    //     cy.get('button').eq(6).click() 
+    // })
+
+}) 

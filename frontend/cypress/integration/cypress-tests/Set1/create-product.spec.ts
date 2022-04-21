@@ -87,5 +87,6 @@ describe('Create a product test', function () {
     it('Submit the form', function() {
         cy.get('button').click()       
     })
+
 })
 
