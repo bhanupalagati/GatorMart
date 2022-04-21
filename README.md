@@ -12,7 +12,8 @@ Although it seems like a trivial filter it allows users to buy or sell quickly b
 * Google Maps integration for navigation.
 * Real-time encrypted messaging between buyer and seller.
 
-
+# Hosted URL:
+This applications frontend is hosted at https://gatormartuf.web.app/ using firebase
 # Tech Stack
 
 ### FrontEnd
