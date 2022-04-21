@@ -37,6 +37,11 @@ export class LoginComponent implements OnInit {
       this.productsService.setCookies('userInfo', JSON.stringify(res));
       this.router.navigate(['/products']);
     });
+    
+  }
+  
+  register_acc() {
+    this.router.navigate(['/signup']);
   }
 
 }
