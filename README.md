@@ -40,3 +40,26 @@ This applications frontend is hosted at https://gatormartuf.web.app/ using fireb
 ### BackEnd
 * Gowtham Reddy Eda - 31581463
 * Vamsi Krishna Reddy Kommareddy - 94438078
+
+### Link to API Documentation
+
+https://github.com/bhanupalagati/GatorMart/blob/main/APIDocumentation.md
+
+### Link to Demo Video Functinality
+
+https://drive.google.com/file/d/1OIYDkWaMdk3yeMaRX70MPOkC_8XVNVem/view?usp=sharing
+
+### Link to Cypress test video
+
+https://drive.google.com/file/d/1Suqm1y8tGllgZqCPowNzBWqs7YcZyIh8/view?usp=sharing
+
+### Link to Backend Unit Test Video
+
+https://drive.google.com/file/d/1jW3R8pttlj_4cBiZor8pP9m3OgjSceNq/view?usp=sharing
+
+### Link to Swagger API Documentation
+
+**https://github.com/bhanupalagati/GatorMart/blob/main/Swagger%20API%20DOCUMENTATION.pdf**
+
+
+
