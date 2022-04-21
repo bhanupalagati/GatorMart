@@ -59,8 +59,6 @@ func TestGetProduct(t *testing.T) {
 
 	})
 
-	// Iterate through test single test cases
-
 	for _, test := range tests {
 
 		// Create a new http request with the route from the test case
