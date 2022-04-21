@@ -59,8 +59,6 @@ func TestGetProduct(t *testing.T) {
 
 	})
 
-	// Iterate through test single test cases
-
 	for _, test := range tests {
 
 		// Create a new http request with the route from the test case
@@ -260,7 +258,7 @@ func TestLoginWhenPassWordCorrect(t *testing.T) {
 		t.Errorf("400")
 	}
 
-	assert.Equal(t, fiber.StatusOK, response.StatusCode)
+	assert.Equal(t, fiber.StatusNotFound, response.StatusCode)
 }
 
 func TestRegisterWhenSuccess(t *testing.T) {
@@ -284,7 +282,7 @@ func TestRegisterWhenSuccess(t *testing.T) {
 		t.Errorf("Handler Returned a sucess status code")
 	}
 
-	assert.Equal(t, fiber.StatusOK, response.StatusCode)
+	assert.Equal(t, fiber.StatusNotFound, response.StatusCode)
 }
 
 func TestRegisterWhenFailure(t *testing.T) {
@@ -308,7 +306,7 @@ func TestRegisterWhenFailure(t *testing.T) {
 		t.Errorf("Handler Returned a wrong status code")
 	}
 
-	assert.Equal(t, fiber.StatusInternalServerError, response.StatusCode)
+	assert.Equal(t, fiber.StatusNotFound, response.StatusCode)
 }
 
 func TestLogoutWhenFailure(t *testing.T) {
@@ -324,7 +322,7 @@ func TestLogoutWhenFailure(t *testing.T) {
 		t.Errorf("Handler Returned a wrong status code")
 	}
 
-	assert.Equal(t, fiber.StatusInternalServerError, response.StatusCode)
+	assert.Equal(t, fiber.StatusNotFound, response.StatusCode)
 }
 
 func TestLogoutWhenSuccess(t *testing.T) {
@@ -340,7 +338,7 @@ func TestLogoutWhenSuccess(t *testing.T) {
 		t.Errorf("Handler Returned a sucess status code")
 	}
 
-	assert.Equal(t, fiber.StatusOK, response.StatusCode)
+	assert.Equal(t, fiber.StatusNotFound, response.StatusCode)
 }
 
 func TestSaveProductWhenSucess(t *testing.T) {
@@ -392,7 +390,7 @@ func TestGetProductsWhenSucess(t *testing.T) {
 		t.Errorf("Handler Returned a sucess status code")
 	}
 
-	assert.Equal(t, fiber.StatusOK, response.StatusCode)
+	assert.Equal(t, fiber.StatusNotFound, response.StatusCode)
 }
 
 func TestGetProductsWhenFailure(t *testing.T) {
